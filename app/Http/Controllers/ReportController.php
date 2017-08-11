@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\TabMember, App\Geography, App\Province, App\SubDistrict, App\NamePrefix;
+use DB;
+use Excel, PDF;
+use DateTime;
+use App\Http\Controllers\TabMemberController;
+use Carbon\Carbon;
+
+class ReportController extends Controller
+{
+    protected $tabMemberController;
+
+    public function __construct(TabMemberController $tabMemberController) {
+        $this->tabMemberController = $tabMemberController;
+    }
+
+    public function getReport() {
+    	return view('report.index');
+    }
+
+    public function getMemberReport(Request $request) {
+
+    	$this->validate($request, [
+    		'report_type' => 'required',
+    	]);
+
+    	$input['geography'] = Geography::find($request->geography_id);
+    	$input['province'] = Province::find($request->province_id);
+    	$input['blind_level'] = $request->blind_level;
+    	$input['start_age'] = $request->start_age;
+    	$input['end_age'] = $request->end_age;
+
+        $tab_members = TabMember::select('tab_members.*', 'geographies.name AS geography_name', 'provinces.name AS province_name')
+            ->join('sub_districts', 'tab_members.sub_district_id', 'sub_districts.id')
+            ->join('provinces', 'sub_districts.province_id', 'provinces.id')
+            ->join('geographies', 'provinces.geography_id', 'geographies.id')
+            ->where(function($q) use ($request) {
+                if($request->geography_id) {
+                    $q->where('geographies.id', $request->geography_id);
+                }
+
+                if($request->province_id) {
+                    $q->where('provinces.id', $request->province_id);
+                }
+
+                if($request->blind_level) {
+                    $q->where('tab_members.blind_level', $request->blind_level);
+                }
+
+                if($request->start_age && $request->end_age) {
+                    $q->whereBetween('tab_members.age', [$request->start_age, $request->end_age]);
+                    $q->orderBy('tab_members.age', 'asc');
+                }
+            })
+            ->get();
+
+    	if($request->report_type == 'xls') {
+    		Excel::create('รายงานข้อมูลสมาชิก-'.date('d-m-Y'), function($excel) use($tab_members, $input) {
+			    $excel->sheet('รายงานข้อมูลสมาชิก', function($sheet) use($tab_members, $input) {
+			        $sheet->loadView('report.member_report_xls', ['tab_members' => $tab_members, 'input' => $input]);
+			    })->export('xls');
+			});
+    	}else {
+    		$pdf = PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input]);
+
+            return $pdf->download('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
+    	}
+
+    	return view('report.member_report_pdf', compact('tab_members'));
+    }
+
+    public function getImport() {
+        return view('report.import');
+    }
+
+    public function importReport(Request $request) {
+        if($request->hasFile('import_file')){
+            $path = $request->file('import_file')->getRealPath();
+
+            $data = Excel::load($path, function($reader) {
+            })->get();
+            if(!empty($data) && $data->count()){
+                foreach ($data as $index => $value) {
+                    $subDistrict = SubDistrict::whereName($value->district)->first();
+                    $namePrefix = NamePrefix::whereName($value->prefix)->first();
+                    $province = Province::whereName($value->province)->first();
+                    $tab_member_count = TabMember::count();
+                    $params[] = [
+                                'old_no' => (string) $value->member_no_old,
+                                'no' => $this->tabMemberController->genMemberNumber(null, !empty($province->id) ? $province->id : null, date('y'), $tab_member_count + ($index + 1)),
+                                'name_prefix_id' => !empty($namePrefix->id) ? $namePrefix->id : null,
+                                'firstname' => $value->firstname,
+                                'lastname' => $value->surname,
+                                'gender' => $value->gender,
+                                'nationality' => $value->nationality,
+                                'race' => $value->race,
+                                'religion' => $value->religion,
+                                'idcard' => (string) $value->id_card,
+                                'home_number' => $value->home_no,
+                                'moo' => (string) $value->moo,
+                                'village' => $value->village,
+                                'soi' => $value->soi,
+                                'road' => $value->road,
+                                'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
+                                'email' => $value->email,
+                                'phone_number' => $value->mobile,
+                                'period_type' => $value->type_member,
+                                'blind_level' => $value->level_see,
+                                'blind_cause' => $value->reason,
+                                'education_name' => $value->eduname,
+                                'status' => $value->status,
+                                'career' => $value->occupation,
+                                'training' => $value->training,
+                                'salary' => $value->sal,
+                                'guarantor_type' => $value->sts,
+                                'guarantor_name' => $value->guarantor,
+                                'remark' => $value->remark,
+                                'dead_no' => $value->cert_dead,
+                                'birthday' => $this->validateDate($value->birthday) ? $value->birthday : null,
+                                'age' => $this->validateDate($value->birthday) ? 542 - calAge($value->birthday) : null,
+                            ];
+                }
+
+                if(!empty($params)){
+                    foreach($params as $param) {
+                        TabMember::create($param);
+                    }
+                }
+            }
+        }
+
+        alert()->success('Import ข้อมูลสำเร็จแล้ว', 'สำเร็จ !')->persistent('ปิด');
+
+        return back();
+    }
+
+    function validateDate($date) {
+        $d = DateTime::createFromFormat('Y-m-d', $date);
+        
+        return $d && $d->format('Y-m-d') === $date;
+    }
+}
