@@ -119,7 +119,7 @@
 	    				@endif
 	    			</div>
 	    			<div class="col-md-2  {{ $errors->has('village') ? 'has-error' : '' }}">
-	    				<input type="text" name="village" class="form-control" placeholder="หมู่บ้าน/อาคาร/ชั้น"  value="{{ old('village') }}">
+	    				<input type="text" name="village" class="form-control" placeholder="หมู่บ้าน/อาคาร/ชั้น/ตึก"  value="{{ old('village') }}">
 	    				@if($errors->has('village'))
 	    				<span class="help-block">{{ $errors->first('village') }}</span>
 	    				@endif
