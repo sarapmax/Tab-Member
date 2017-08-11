@@ -50,12 +50,16 @@
                         <h5>ที่อยู่ตามบัตรประชาชน</h5>   
                         <table class="table table-striped">
                             <tr>
-                                <td style="border-top: 0px;width: 20%;">ภูมิภาค ({{ $tab_member->sub_district->district->province->geography->name }}) : </td>
-                                <td style="border-top: 0;">ตำบล <b>{{ $tab_member->sub_district->name }}</b> อำเภอ <b>{{ $tab_member->sub_district->district->name }}</b> จังหวัด <b>{{ $tab_member->sub_district->district->province->name }}</b>    <b>{{ $tab_member->sub_district->zipcode->zipcode }}</b> </td>
+                                <td style="border-top: 0px;width: 20%;">ภูมิภาค : </td>
+                                <td style="border-top: 0;">{{ $tab_member->sub_district->district->province->geography->name }}</td>
                             </tr>
                             <tr>
                                 <td>ที่อยู่ :</td>
-                                <td>{{ $tab_member->home_number }} หมู่ที่ {{ $tab_member->moo }} {{ $tab_member->village ? 'หมู่บ้าน ' . $tab_member->village : '' }} {{ $tab_member->soi ? 'ซอย' . $tab_member->soi : '' }}  {{ $tab_member->road ? 'ถนน ' . $tab_member->road : '' }}</td>
+                                <td>
+                                    {{ $tab_member->home_number }} หมู่ที่ {{ $tab_member->moo }} {{ $tab_member->village ? 'หมู่บ้าน ' . $tab_member->village : '' }} {{ $tab_member->soi ? 'ซอย' . $tab_member->soi : '' }}  {{ $tab_member->road ? 'ถนน ' . $tab_member->road : '' }}<br/>
+                                     ต.{{ $tab_member->sub_district->name }} อ.{{ $tab_member->sub_district->district->name }}  จ.{{ $tab_member->sub_district->district->province->name }} {{ $tab_member->sub_district->zipcode->zipcode }}
+
+                                </td>
                             </tr>
                         </table>
                     </fieldset>
