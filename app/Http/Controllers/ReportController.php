@@ -83,51 +83,54 @@ class ReportController extends Controller
 
             $data = Excel::load($path, function($reader) {
             })->get();
+
             if(!empty($data) && $data->count()){
                 foreach ($data as $index => $value) {
-                    $subDistrict = SubDistrict::whereName($value->district)->first();
-                    $namePrefix = NamePrefix::whereName($value->prefix)->first();
-                    $province = Province::whereName($value->province)->first();
-                    $tab_member_count = TabMember::count();
-                    $params[] = [
-                                'old_no' => (string) $value->member_no_old,
-                                'no' => $this->tabMemberController->genMemberNumber(null, !empty($province->id) ? $province->id : null, date('y'), $tab_member_count + ($index + 1)),
-                                'name_prefix_id' => !empty($namePrefix->id) ? $namePrefix->id : null,
-                                'firstname' => $value->firstname,
-                                'lastname' => $value->surname,
-                                'gender' => $value->gender,
-                                'nationality' => $value->nationality,
-                                'race' => $value->race,
-                                'religion' => $value->religion,
-                                'idcard' => (string) $value->id_card,
-                                'home_number' => $value->home_no,
-                                'moo' => (string) $value->moo,
-                                'village' => $value->village,
-                                'soi' => $value->soi,
-                                'road' => $value->road,
-                                'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
-                                'email' => $value->email,
-                                'phone_number' => $value->mobile,
-                                'period_type' => $value->type_member,
-                                'blind_level' => $value->level_see,
-                                'blind_cause' => $value->reason,
-                                'education_name' => $value->eduname,
-                                'status' => $value->status,
-                                'career' => $value->occupation,
-                                'training' => $value->training,
-                                'salary' => $value->sal,
-                                'guarantor_type' => $value->sts,
-                                'guarantor_name' => $value->guarantor,
-                                'remark' => $value->remark,
-                                'dead_no' => $value->cert_dead,
-                                'birthday' => $this->validateDate($value->birthday) ? $value->birthday : null,
-                                'age' => $this->validateDate($value->birthday) ? 542 - calAge($value->birthday) : null,
-                            ];
-                }
-
-                if(!empty($params)){
-                    foreach($params as $param) {
-                        TabMember::create($param);
+                    if($index > 1) {
+                        $subDistrict = SubDistrict::whereName($value->district)->first();
+                        $namePrefix = NamePrefix::whereName($value->prefix)->first();
+                        $province = Province::whereName($value->province)->first();
+                        $tab_member_count = TabMember::count();
+                        TabMember::create([
+                                    'old_no' => (string) $value->member_no_old,
+                                    'no' => $this->tabMemberController->genMemberNumber(null, !empty($province->id) ? $province->id : null, date('y'), $tab_member_count + ($index + 1)),
+                                    'name_prefix_id' => !empty($namePrefix->id) ? $namePrefix->id : null,
+                                    'firstname' => $value->firstname,
+                                    'lastname' => $value->surname,
+                                    'gender' => $value->gender,
+                                    'nationality' => $value->nationality,
+                                    'race' => $value->race,
+                                    'religion' => $value->religion,
+                                    'idcard' => (string) $value->id_card,
+                                    'home_number' => $value->home_no,
+                                    'moo' => (string) $value->moo,
+                                    'village' => $value->village,
+                                    'soi' => $value->soi,
+                                    'road' => $value->road,
+                                    'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
+                                    'email' => $value->email,
+                                    'phone_number' => $value->mobile,
+                                    'type' => $value->type,
+                                    'period_type' => $value->period_type,
+                                    'blind_name' => $value->blind_name,
+                                    'blind_no' => $value->blind_no,
+                                    'blind_level' => $value->blind_level,
+                                    'blind_cause' => $value->blind_cause,
+                                    'education_level' => $value->education_level,
+                                    'education_name' => $value->education_name,
+                                    'birthday' => $this->validateDate($value->birthday) ? $value->birthday : null,
+                                    'status' => $value->status,
+                                    'career' => $value->career,
+                                    'training' => $value->training,
+                                    'salary' => $value->sal,
+                                    'guarantor_type' => $value->guarantor_type,
+                                    'guarantor_name' => $value->guarantor_name,
+                                    'remark' => $value->remark,
+                                    'dead' => $value->dead,
+                                    'dead_date' => $this->validateDate($value->dead_date) ? $value->dead_date : null,
+                                    'dead_no' => $value->dead_no,
+                                    'age' => $this->validateDate($value->birthday) ? 542 - calAge($value->birthday) : null,
+                                ]);
                     }
                 }
             }
