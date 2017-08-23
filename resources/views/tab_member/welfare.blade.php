@@ -1,6 +1,6 @@
 @extends('layout.user')
 
-@section('header-title', 'ข้อมูลสมาชิก &raquo; สวัสดิการ &raquo; ' . $tab_member->name_prefix->name . ' ' . $tab_member->firstname . ' ' . $tab_member->lastname)
+@section('header-title', 'ข้อมูลสมาชิก &raquo; สวัสดิการ &raquo; ' . $tab_member->firstname . ' ' . $tab_member->lastname)
 
 @section('content')
 

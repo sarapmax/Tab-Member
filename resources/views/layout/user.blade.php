@@ -13,6 +13,20 @@
                 <li><a id="offcanvas-toggler" href="#" class="menu-link menu-link-slide"><span><em></em></span></a></li>
             </ul>
             <h2 class="header-title">@yield('header-title')</h2>
+            <ul class="pull-right">
+                <li>
+                    <a id="header-settings" href="{{ url('show_user') }}" class="ripple">
+                        <i class="fa fa-user"></i>
+                        {{ auth()->guard('user')->user()->firstname . ' ' . auth()->guard('user')->user()->lastname }} (สาขา {{ auth()->guard('user')->user()->geography->name }})
+                    </a>
+                </li>
+                <li>
+                    <a id="header-settings" href="{{ url('logout') }}" class="ripple">
+                        <i class="fa fa-sign-out"></i>
+                        ออกจากระบบ
+                    </a>
+                </li>
+            </ul>
         </nav>
     </header>
     <!-- sidebar-->
@@ -21,19 +35,6 @@
             <div class="pull-right pt-lg text-muted hidden"><em class="ion-close-round"></em></div><a href="#" class="sidebar-header-logo"><span class="sidebar-header-logo-text">TAB Member</span></a>
         </div>
         <div class="sidebar-content">
-            <div class="sidebar-toolbar text-center"><a href=""><img src="{{ asset('centric/img/user/01.jpg') }}" alt="Profile" class="img-circle thumb64"></a>
-                <div class="mt dropdown">
-                    <a href="#" style="color:#fff;text-decoration: none;" data-toggle="dropdown" class="dropdown-toggle ripple">
-                        <span>{{ auth()->guard('user')->user()->firstname . ' ' . auth()->guard('user')->user()->lastname }}</span> 
-                        <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu md-dropdown-menu">
-                        <li><a href="{{ url('show_user') }}"><em class="ion-person icon-fw"></em>ข้อมูลส่วนตัว</a></li>
-                        <li role="presentation" class="divider"></li>
-                        <li><a href="{{ url('logout') }}"><em class="ion-log-out icon-fw"></em>ออกจากระบบ</a></li>
-                    </ul>
-                </div>
-            </div>
             <nav class="sidebar-nav">
                 <ul>
                     <li {{ Request::segment(1) == '' ? 'class=active' : '' }}>
@@ -68,6 +69,7 @@
                             <span>รายงาน</span>
                         </a>
                     </li>
+                    @if(auth()->guard('user')->user()->admin)
                     <li {{ Request::segment(1) == 'import' ? 'class=active' : '' }}>
                         <a href="{{ url('import') }}" class="ripple">
                             <span class="nav-icon">
@@ -76,7 +78,6 @@
                             <span>Import</span>
                         </a>
                     </li>
-                    @if(auth()->guard('user')->user()->admin)
                     <li {{ Request::segment(1) == 'manage_user' ? 'class=active' : '' }}>
                         <a href="{{ url('manage_user') }}" class="ripple">
                             <span class="nav-icon">

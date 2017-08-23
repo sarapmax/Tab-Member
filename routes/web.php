@@ -41,6 +41,16 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
 	Route::resource('tab_member/welfare', 'WelfareController');
 
+	Route::get('tab_member/welfare/{tab_member_no}/create', 'WelfareController@createWelfare');
+
+    Route::get('tab_member/welfare/{id}/print', 'WelfareController@printWelfare');
+
+    Route::resource('service_fee', 'ServiceFeeController');
+
+    Route::get('tab_member/service_fee/{tab_member_no}', 'ServiceFeeController@getServiceFee');
+
+    Route::get('tab_member/service_fee/{tab_member_no}/create', 'ServiceFeeController@createServiceFee');
+
 	Route::get('report', 'ReportController@getReport');
 
 	Route::post('member_report', 'ReportController@getMemberReport');

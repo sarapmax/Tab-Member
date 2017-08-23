@@ -66,7 +66,7 @@ return [
     'numeric'              => '* ต้องกรอกเป็นตัวเลขเท่านั้น',
     'present'              => 'The :attribute field must be present.',
     'regex'                => 'The :attribute format is invalid.',
-    'required'             => '* จำเป็นต้องกรอก',
+    'required'             => '* กรุณาระบุ',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_unless'      => 'The :attribute field is required unless :other is in :values.',
     'required_with'        => 'The :attribute field is required when :values is present.',

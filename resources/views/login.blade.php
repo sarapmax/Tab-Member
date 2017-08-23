@@ -18,7 +18,7 @@
 		                   	<div class="mda-form-control">
 		                      	<input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
 		                      	<div class="mda-form-control-line"></div>
-		                      	<label for="email" class="control-label" style="font-size:1em;"><em class="ion-android-person"> </em> อีเมล์</label>
+		                      	<label for="email" class="control-label" style="font-size:1em;"><em class="ion-android-person"> </em> อีเมล</label>
 		                    </div>
 		                    @if($errors->has('email'))
 		                    <span class="help-block">{{ $errors->first('email') }}</span>
@@ -42,13 +42,20 @@
                       	</div><br/><br/>
 
                   		<div class="mda-form-group">
-                      		<button type="submit" class="btn btn-primary btn-block"><em class="ion-log-in"> </em> เข้าสู่ระบบ</button>
+							<div class="row">
+								<div class="col-md-6">
+									<button type="submit" class="btn btn-primary btn-block btn-sm">ตกลง</button>
+								</div>
+								<div class="col-md-6">
+									<input type="reset" class="btn btn-default btn-block btn-sm" value="Clear">
+								</div>
+							</div>
                   		</div>
 				  	</div>
 				</form>
-				<div class="text-center text-sm">
-					<a href="{{ url('register') }}" class="text-inherit">สมัครสมาชิก</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<a href="{{ url('forgot_password') }}" class="text-inherit">ลืมรหัสผ่าน ?</a>
+				<div class="text-center" style="font-size:16px;">
+					<a href="{{ url('register') }}" style="text-decoration: underline;" class="text-inherit">สมัครสมาชิก</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="{{ url('forgot_password') }}" style="text-decoration: underline;" class="text-inherit">ลืมรหัสผ่าน?</a>
 				</div>
 			</div>
 		</div>

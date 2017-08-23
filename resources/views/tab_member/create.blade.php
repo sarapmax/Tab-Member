@@ -36,6 +36,15 @@
 	    				@endif
 	    			</div>
     			</div><br/>
+				<div class="form-group {{ $errors->has('idcard') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">หมายเลขบัตรประชาชน : </label>
+					<div class="col-md-9">
+						<input type="text" name="idcard" class="form-control" placeholder="หมายเลขบัตรประชาชน" value="{{ old('idcard') }}">
+						@if($errors->has('idcard'))
+							<span class="help-block">{{ $errors->first('idcard') }}</span>
+						@endif
+					</div>
+				</div><br/>
     			<div class="form-group {{ $errors->has('old_no') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">หมายเลขสมาชิกเก่า : </label>
     				<div class="col-md-9">
@@ -88,15 +97,6 @@
 	    				<input type="text" name="religion" class="form-control" value="{{ old('religion') }}" placeholder="ศาสนา">
 	    				@if($errors->has('religion'))
 	    				<span class="help-block">{{ $errors->first('religion') }}</span>
-	    				@endif
-	    			</div>
-    			</div><br/>
-    			<div class="form-group {{ $errors->has('idcard') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">หมายเลขบัตรประชาชน : </label>
-    				<div class="col-md-9">
-	    				<input type="text" name="idcard" class="form-control" placeholder="หมายเลขบัตรประชาชน" value="{{ old('idcard') }}">
-	    				@if($errors->has('idcard'))
-	    				<span class="help-block">{{ $errors->first('idcard') }}</span>
 	    				@endif
 	    			</div>
     			</div><br/>
@@ -184,11 +184,11 @@
     			</div><br/>
     		</fieldset>
     		<fieldset>
-    			<legend>ข้อมูลอื่นๆ</legend>
+    			<legend>รายละเอียดอื่นๆ</legend>
     			<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">อีเมล์ : </label>
+    				<label class="control-label col-md-2">อีเมล : </label>
     				<div class="col-md-9">
-	    				<input type="text" name="email" class="form-control" placeholder="อีเมล์"  value="{{ old('email') }}">
+	    				<input type="text" name="email" class="form-control" placeholder="อีเมล"  value="{{ old('email') }}">
 	    				@if($errors->has('email'))
 	    				<span class="help-block">{{ $errors->first('email') }}</span>
 	    				@endif
@@ -200,19 +200,6 @@
 	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"  value="{{ old('phone_number') }}">
 	    				@if($errors->has('phone_number'))
 	    				<span class="help-block">{{ $errors->first('phone_number') }}</span>
-	    				@endif
-	    			</div>
-    			</div><br/>
-    			<div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">สถานะ : </label>
-    				<div class="col-md-9">
-	    				<select class="form-control" name="type">
-	    					<option value="">เลือกสถานะ</option>
-	    					<option @if(old('type') == 'คนพิการ') selected @endif value="คนพิการ">คนพิการ</option>
-	    					<option @if(old('type') == 'คนดูแลคนพิการ') selected @endif value="คนดูแลคนพิการ">คนดูแลคนพิการ</option>
-	    				</select>
-	    				@if($errors->has('type'))
-	    				<span class="help-block">{{ $errors->first('type') }}</span>
 	    				@endif
 	    			</div>
     			</div><br/>
@@ -229,12 +216,12 @@
 	    				@endif
 	    			</div>
     			</div><br/>
-    			<div class="form-group {{ $errors->has('blind_name') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">ชื่อคนพิการ : </label>
+    			<div class="form-group {{ $errors->has('present_address') ? 'has-error' : '' }}">
+    				<label class="control-label col-md-2">ที่อยุ่ปัจจุบัน : </label>
     				<div class="col-md-9">
-	    				<input type="text" name="blind_name" class="form-control" placeholder="ชื่อคนพิการ"  value="{{ old('blind_name') }}">
-	    				@if($errors->has('blind_name'))
-	    				<span class="help-block">{{ $errors->first('blind_name') }}</span>
+						<textarea name="present_address" class="form-control" cols="30" rows="4" placeholder="กรอกที่อยู่ปัจจุบัน">{{ old('present_address') }}</textarea>
+	    				@if($errors->has('present_address'))
+	    				<span class="help-block">{{ $errors->first('present_address') }}</span>
 	    				@endif
 	    			</div>
     			</div><br/>
@@ -347,15 +334,15 @@
     				<div class="col-md-9">
 	    				<select class="form-control" name="guarantor_type">
 	    					<option value="">เลือกประเภท</option>
-	    					<option @if(old('guarantor_type') == 'บุลคลสามัญ|1') selected @endif value="บุลคลสามัญ|1">บุลคลสามัญ</option>
-                            <option @if(old('guarantor_type') == 'บุลคลวิสามัญ|2') selected @endif value="บุลคลวิสามัญ|2">บุลคลวิสามัญ</option>
-                            <option @if(old('guarantor_type') == 'บุลคลกิติมศักดิ์|3') selected @endif value="บุลคลกิติมศักดิ์|3">บุลคลกิติมศักดิ์</option>
-                            <option @if(old('guarantor_type') == 'นิติบุลคลสามัญ|4') selected @endif value="นิติบุลคลสามัญ|4">นิติบุลคลสามัญ</option>
-                            <option @if(old('guarantor_type') == 'นิติบุลคลวิสามัญ|5') selected @endif value="นิติบุลคลวิสามัญ|5">นิติบุลคลวิสามัญ</option>
-                            <option @if(old('guarantor_type') == 'นิติบุลคลกิติมศักดิ์|6') selected @endif value="นิติบุลคลกิติมศักดิ์|6">นิติบุลคลกิติมศักดิ์</option>
-                            <option @if(old('guarantor_type') == 'คณะบุลคลสามัญ|7') selected @endif value="คณะบุลคลสามัญ|7">คณะบุลคลสามัญ</option>
-                            <option @if(old('guarantor_type') == 'คณะบุลคลวิสามัญ|8') selected @endif value="คณะบุลคลวิสามัญ|8">คณะบุลคลวิสามัญ</option>
-                            <option @if(old('guarantor_type') == 'คณะบุลคลกิติมศักดิ์|9') selected @endif value="คณะบุลคลกิติมศักดิ์|9">คณะบุลคลกิติมศักดิ์</option>
+	    					<option @if(old('guarantor_type') == 'บุคคลสามัญ') selected @endif value="บุคคลสามัญ">บุคคลสามัญ</option>
+                            <option @if(old('guarantor_type') == 'บุคคลวิสามัญ') selected @endif value="บุคคลวิสามัญ">บุคคลวิสามัญ</option>
+                            <option @if(old('guarantor_type') == 'บุคคลกิติมศักดิ์') selected @endif value="บุคคลกิติมศักดิ์">บุคคลกิติมศักดิ์</option>
+                            <option @if(old('guarantor_type') == 'นิติบุคคลสามัญ') selected @endif value="นิติบุคคลสามัญ">นิติบุคคลสามัญ</option>
+                            <option @if(old('guarantor_type') == 'นิติบุคคลวิสามัญ') selected @endif value="นิติบุคคลวิสามัญ">นิติบุคคลวิสามัญ</option>
+                            <option @if(old('guarantor_type') == 'นิติบุคคลกิติมศักดิ์') selected @endif value="นิติบุคคลกิติมศักดิ์">นิติบุคคลกิติมศักดิ์</option>
+                            <option @if(old('guarantor_type') == 'คณะบุคคลสามัญ') selected @endif value="คณะบุคคลสามัญ">คณะบุคคลสามัญ</option>
+                            <option @if(old('guarantor_type') == 'คณะบุคคลวิสามัญ') selected @endif value="คณะบุคคลวิสามัญ">คณะบุคคลวิสามัญ</option>
+                            <option @if(old('guarantor_type') == 'คณะบุคคลกิติมศักดิ์') selected @endif value="คณะบุคคลกิติมศักดิ์">คณะบุคคลกิติมศักดิ์</option>
 
 	    				</select>
 	    				@if($errors->has('guarantor_type'))
@@ -375,6 +362,7 @@
     			<div class="form-group">
     				<div class="col-md-offset-2 col-md-10">
     					<button type="submit" class="btn btn-primary"><em class="ion-android-checkbox-outline"></em> บันทึกข้อมูล</button>
+						<input type="reset" class="btn btn-default" value="Clear">
     				</div>
     			</div>
     		</fieldset>

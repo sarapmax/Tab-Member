@@ -9,25 +9,55 @@ use Image;
 class TabMemberController extends Controller
 {
     /**
+     * @var TabMember
+     */
+    protected $tabMember;
+
+    /**
+     * TabMemberController constructor.
+     *
+     * @param TabMember $tabMember
+     */
+    public function __construct(TabMember $tabMember) {
+        $this->tabMember = $tabMember;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $tab_members = null;
+        $filters['no'] = $request->input('no');
+        $filters['name'] = $request->input('name');
+        $filters['phone_number'] = $request->input('phone_number');
+        $filters['idcard'] = $request->input('idcard');
 
-        if($request->value) {
-            $tab_members = TabMember::where('no', 'like', '%' . $request->value . '%')
-                                    ->orWhere('firstname', 'like', '%' . $request->value . '%')
-                                    ->orWhere('lastname', 'like', '%' . $request->value . '%')
-                                    ->orWhere('phone_number', 'like', '%' . $request->value . '%')
-                                    ->orWhere('idcard', 'like', '%' . $request->value . '%')
-                                    ->limit(200)
-                                    ->get();
+        $tab_members = $this->tabMember->with('name_prefix');
+
+        if(!empty($filters)) {
+            if(!empty($filters['no'])) {
+                $tab_members->where('no', 'like', '%' . $filters['no'] . '%');
+            }
+
+            if(!empty($filters['name'])) {
+                $tab_members->where(function($q) use ($filters) {
+                    $q->where('firstname', 'LIKE', '%' . $filters['name'] . '%')
+                        ->orWhere('lastname', 'LIKE', '%' . $filters['name'] . '%');
+                });
+            }
+
+            if(!empty($filters['phone_number'])) {
+                $tab_members->where('phone_number', 'like', '%' . $filters['phone_number'] . '%');
+            }
+
+            if(!empty($filters['idcard'])) {
+                $tab_members->where('idcard', 'like', '%' . $filters['idcard'] . '%');
+            }
         }
 
-        return view('tab_member.index', compact('tab_members'));
+        return view('tab_member.index', ['tab_members' => $tab_members->paginate(20), 'filters' => $filters]);
     }
 
     /**
@@ -53,15 +83,12 @@ class TabMemberController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'gender' => 'required',
-            'birthday' => 'required',
-            'nationality' => 'required',
-            'race' => 'required',
-            'religion' => 'required',
             'idcard' => 'required|numeric|digits:13|unique:tab_members',
             'province_id' => 'required',
             'district_id' => 'required',
             'sub_district_id' => 'required',
             'zipcode' => 'required|digits:5',
+            'present_address' => 'required',
             'phone_number' => 'required|numeric|digits:10',
             'period_type' => 'required',
             'guarantor_type' => 'required',
@@ -69,8 +96,7 @@ class TabMemberController extends Controller
         ]);
 
         $tab_member = new TabMember;
-        $tab_member_type = explode('|', $request->guarantor_type);
-        $tab_member->no = $this->genMemberNumber($tab_member_type[1], $request->province_id, date('y'), TabMember::count()+1);
+        $tab_member->no = $this->genMemberNumber($request->guarantor_type, $request->province_id, date('y'), TabMember::count()+1);
         $tab_member->old_no = $request->old_no;
         $tab_member->name_prefix_id = $request->name_prefix_id;
         $tab_member->firstname = $request->firstname;
@@ -89,19 +115,18 @@ class TabMemberController extends Controller
         $tab_member->sub_district_id = $request->sub_district_id;
         $tab_member->email = $request->email;
         $tab_member->phone_number = $request->phone_number;
-        $tab_member->type = $request->type;
         $tab_member->period_type = $request->period_type;
         $tab_member->blind_no = $request->blind_no;
         $tab_member->blind_level = $request->blind_level;
         $tab_member->blind_cause = $request->blind_cause;
-        $tab_member->blind_name = $request->blind_name;
+        $tab_member->present_address = $request->present_address;
         $tab_member->education_level = $request->education_level;
         $tab_member->education_name = $request->education_name;
         $tab_member->status = $request->status;
         $tab_member->career = $request->career;
         $tab_member->training = $request->training;
         $tab_member->salary = $request->salary;
-        $tab_member->guarantor_type = $tab_member_type[0];
+        $tab_member->guarantor_type = $request->guarantor_type;
         $tab_member->guarantor_name = $request->guarantor_name;
 
         $tab_member->save();
@@ -151,15 +176,12 @@ class TabMemberController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'gender' => 'required',
-            'birthday' => 'required',
-            'nationality' => 'required',
-            'race' => 'required',
-            'religion' => 'required',
             'idcard' => 'required|numeric|digits:13',
             'province_id' => 'required',
             'district_id' => 'required',
             'sub_district_id' => 'required',
             'zipcode' => 'required|digits:5',
+            'present_address' => 'required',
             'phone_number' => 'required|numeric|digits:10',
             'period_type' => 'required',
             'guarantor_type' => 'required',
@@ -173,7 +195,7 @@ class TabMemberController extends Controller
         $tab_member->firstname = $request->firstname;
         $tab_member->lastname = $request->lastname;
         $tab_member->gender = $request->gender;
-        $tab_member->birthday = date('Y-d-m', strtotime($request->birthday));
+        $tab_member->birthday = date('Y-m-d', strtotime($request->birthday));
         $tab_member->nationality = $request->nationality;
         $tab_member->race = $request->race;
         $tab_member->religion = $request->religion;
@@ -186,12 +208,11 @@ class TabMemberController extends Controller
         $tab_member->sub_district_id = $request->sub_district_id;
         $tab_member->email = $request->email;
         $tab_member->phone_number = $request->phone_number;
-        $tab_member->type = $request->type;
         $tab_member->period_type = $request->period_type;
         $tab_member->blind_no = $request->blind_no;
         $tab_member->blind_level = $request->blind_level;
         $tab_member->blind_cause = $request->blind_cause;
-        $tab_member->blind_name = $request->blind_name;
+        $tab_member->present_address = $request->present_address;
         $tab_member->education_level = $request->education_level;
         $tab_member->education_name = $request->education_name;
         $tab_member->status = $request->status;
@@ -205,13 +226,13 @@ class TabMemberController extends Controller
 
         alert()->success('แก้ไขข้อมูลสมาชิกเรียบร้อยแล้ว', 'สำเร็จ !')->persistent('ปิด');
 
-        return redirect()->back();
+        return redirect('tab_member/' . $tab_member->no);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $tab_member_no
      * @return \Illuminate\Http\Response
      */
     public function destroy($tab_member_no)
@@ -231,7 +252,7 @@ class TabMemberController extends Controller
         return redirect()->back();
     }
 
-    public function genMemberNumber($member_type, $province_id, $register_year, $order) {
+    public function genMemberNumber($guarantor_type, $province_id, $register_year, $order) {
         $province_code = null;
 
         if($province_id) {
@@ -240,9 +261,46 @@ class TabMemberController extends Controller
         
         $register_year = $register_year+43;
         $order = sprintf("%04d", $order);
-        $member_type = $member_type ? $member_type : null;
 
-        return $member_type . '' . $province_code . '' . $register_year . '' . $order;
+        return $this->convertGuarantorTypeToNumber($guarantor_type) . '' . $province_code . '' . $register_year . '' . $order;
+    }
+
+    public function convertGuarantorTypeToNumber($guarantor_type) {
+        $result = null;
+
+        switch ($guarantor_type) {
+            case 'บุคคลสามัญ' :
+                $result = '1';
+                break;
+            case 'บุคคลวิสามัญ' :
+                $result = '2';
+                break;
+            case 'บุคคลกิติมศักดิ์' :
+                $result = '3';
+                break;
+            case 'นิติบุคคลสามัญ' :
+                $result = '4';
+                break;
+            case 'นิติบุคคลวิสามัญ' :
+                $result = '5';
+                break;
+            case 'นิติบุคคลกิติมศักดิ์' :
+                $result = '6';
+                break;
+            case 'คณะบุคคลสามัญ' :
+                $result = '7';
+                break;
+            case 'คณะบุคคลวิสามัญ' :
+                $result = '8';
+                break;
+            case 'คณะบุคคลกิติมศักดิ์' :
+                $result = '9';
+                break;
+            default :
+                $result = '0';
+        }
+
+        return $result;
     }
 
     public function getTabMemberCard($tab_member_no) {

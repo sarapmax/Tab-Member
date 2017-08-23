@@ -18,7 +18,7 @@
 		                   	<div class="mda-form-control">
 		                      	<input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
 		                      	<div class="mda-form-control-line"></div>
-		                      	<label for="email" class="control-label" style="font-size:1em;">อีเมล์</label>
+		                      	<label for="email" class="control-label" style="font-size:1em;">อีเมล</label>
 		                    </div>
 		                    @if($errors->has('email'))
 		                    <span class="help-block">{{ $errors->first('email') }}</span>
@@ -80,26 +80,38 @@
 		                    @endif
                   		</div>
 
-                  		<div class="mda-form-group {{ $errors->has('branch') ? 'has-error' : '' }}">
+                  		<div class="mda-form-group {{ $errors->has('geography_id') ? 'has-error' : '' }}">
                     		<div class="mda-form-control">
-                      			<input type="branch" name="branch" id="branch" class="form-control" value="{{ old('branch') }}">
+								<select class="form-control" name="geography_id">
+									<option value="">-- เลือกสาขา --</option>
+									@foreach(App\Geography::all() as $geography)
+										<option value="{{ $geography->id }}" @if(old('geography_id') == $geography->id) selected @endif>สาขา {{ $geography->name }}</option>
+									@endforeach
+								</select>
                       			<div class="mda-form-control-line"></div>
-                      			<label for="branch" class="control-label" style="font-size:1em;">สาขา</label>
+                      			<label for="geography_id" class="control-label" style="font-size:1em;">สาขา</label>
                     		</div>
-                    		@if($errors->has('branch'))
-		                    <span class="help-block">{{ $errors->first('branch') }}</span>
+                    		@if($errors->has('geography_id'))
+		                    <span class="help-block">{{ $errors->first('geography_id') }}</span>
 		                    @endif
                   		</div>
                   		
-                  		<div class="mda-form-group">
-                            <input type="hidden" name="admin" value="0">
-                            <input type="hidden" name="active" value="0">
-                      		<button type="submit" class="btn btn-primary btn-block"><em class="ion-android-checkbox-outline"> </em> สมัครสมาชิก</button>
-                  		</div>
+						<div class="mda-form-group">
+							<div class="row">
+								<div class="col-md-6">
+									<input type="hidden" name="admin" value="0">
+									<input type="hidden" name="active" value="0">
+									<button type="submit" class="btn btn-primary btn-block btn-sm">ตกลง</button>
+								</div>
+								<div class="col-md-6">
+									<input type="reset" class="btn btn-default btn-block btn-sm" value="Clear">
+								</div>
+							</div>
+						</div>
 				  	</div>
 				</form>
-				<div class="text-center text-sm">
-					<a href="{{ url('login') }}" class="text-inherit">เข้าสู่ระบบ</a>
+				<div class="text-center" style="font-size: 16px;">
+					<a href="{{ url('login') }}" style="text-decoration: underline;" class="text-inherit">เข้าสู่ระบบ</a>
 				</div>
 			</div>
 		</div>

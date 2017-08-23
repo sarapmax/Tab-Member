@@ -10,7 +10,16 @@
 				<td colspan="7"><strong>จังหวัด:</strong> {{ $input['province'] ? $input['province']['name'] : 'ทั้งหมด' }}</td>
 			</tr>
 			<tr>
+				<td colspan="7"><strong>ประเภทสมาชิก:</strong> {{ $input['period_type'] ? $input['period_type'] : 'ทั้งหมด' }}</td>
+			</tr>
+			<tr>
 				<td colspan="7"><strong>ระดับการมองเห็น:</strong> {{ $input['blind_level'] ? $input['blind_level']  : 'ทั้งหมด' }}</td>
+			</tr>
+			<tr>
+				<td colspan="7"><strong>ระดับการศึกษา:</strong> {{ $input['education_level'] ? $input['education_level']  : 'ทั้งหมด' }}</td>
+			</tr>
+			<tr>
+				<td colspan="7"><strong>เพศ:</strong> {{ $input['gender'] ? $input['gender']  : 'ทั้งหมด' }}</td>
 			</tr>
 			<tr>
 				<td colspan="7"><strong>ช่วงอายุ:</strong> {{ $input['start_age'] ? $input['start_age'] . ' - ' .$input['end_age'] . ' ปี' : 'ทั้งหมด' }}</td>
@@ -24,7 +33,6 @@
 				<th>ชื่อ - สกุล</th>
 				<th>อายุ(ปี)</th>
 				<th>เพศ</th>
-				<th>ภูมิภาค</th>
 				<th>ประเภทสมาชิก</th>
 			</tr>
 		</thead>
@@ -36,7 +44,6 @@
 				<td>{{ $tab_member->name_prefix_id ? $tab_member->name_prefix->name : '' }} {{ $tab_member->firstname }} {{ $tab_member->lastname }}</td>
 				<th>{{ $tab_member->age }}</th>
 				<td>{{ $tab_member->gender }}</td>
-				<td>{{ $tab_member->geography_name }}</td>
 				<td>{{ $tab_member->period_type }}</td>
 			</tr>
 			@endforeach

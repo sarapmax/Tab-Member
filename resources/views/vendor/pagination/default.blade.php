@@ -1,6 +1,9 @@
 @if ($paginator->hasPages())
     <ul class="pagination">
         {{-- Previous Page Link --}}
+        <li class="{{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
+            <a href="{{ $paginator->url(1) }}">หน้าแรก</a>
+        </li>
         @if ($paginator->onFirstPage())
             <li class="disabled"><span>&laquo;</span></li>
         @else
@@ -17,11 +20,7 @@
             {{-- Array Of Links --}}
             @if (is_array($element))
                 @foreach ($element as $page => $url)
-                    @if ($page == $paginator->currentPage())
-                        <li class="active"><span>{{ $page }}</span></li>
-                    @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
-                    @endif
+                    <li class="{{ $page == $paginator->currentPage() ? ' active' : ''  }}" ><a href="{{ $url }}">{{ $page }}</a></li>
                 @endforeach
             @endif
         @endforeach
@@ -32,5 +31,8 @@
         @else
             <li class="disabled"><span>&raquo;</span></li>
         @endif
+        <li class="{{ !$paginator->hasMorePages() ? ' disabled' : '' }}">
+            <a href="{{ $paginator->url($paginator->lastPage()) }}">หน้าสุดท้าย</a>
+        </li>
     </ul>
 @endif

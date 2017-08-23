@@ -1,6 +1,6 @@
 @extends('layout.user')
 
-@section('header-title', 'ข้อมูลสมาชิก &raquo; แก้ไข &raquo; ' . $tab_member->name_prefix->name . ' ' . $tab_member->firstname . ' ' . $tab_member->lastname)
+@section('header-title', 'ข้อมูลสมาชิก &raquo; แก้ไข &raquo; ' . $tab_member->firstname . ' ' . $tab_member->lastname)
 
 @section('content')
 
@@ -187,9 +187,9 @@
     		<fieldset>
     			<legend>ข้อมูลอื่นๆ</legend>
     			<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">อีเมล์ : </label>
+    				<label class="control-label col-md-2">อีเมล : </label>
     				<div class="col-md-9">
-	    				<input type="text" name="email" class="form-control" placeholder="อีเมล์"  value="{{ old('email', $tab_member->email) }}">
+	    				<input type="text" name="email" class="form-control" placeholder="อีเมล"  value="{{ old('email', $tab_member->email) }}">
 	    				@if($errors->has('email'))
 	    				<span class="help-block">{{ $errors->first('email') }}</span>
 	    				@endif
@@ -201,19 +201,6 @@
 	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"  value="{{ old('phone_number', $tab_member->phone_number) }}">
 	    				@if($errors->has('phone_number'))
 	    				<span class="help-block">{{ $errors->first('phone_number') }}</span>
-	    				@endif
-	    			</div>
-    			</div><br/>
-    			<div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">สถานะ : </label>
-    				<div class="col-md-9">
-	    				<select class="form-control" name="type">
-	    					<option value="">เลือกสถานะ</option>
-	    					<option @if(old('type', $tab_member->type) == 'คนพิการ') selected @endif value="คนพิการ">คนพิการ</option>
-	    					<option @if(old('type', $tab_member->type) == 'คนดูแลคนพิการ') selected @endif value="คนดูแลคนพิการ">คนดูแลคนพิการ</option>
-	    				</select>
-	    				@if($errors->has('type'))
-	    				<span class="help-block">{{ $errors->first('type') }}</span>
 	    				@endif
 	    			</div>
     			</div><br/>
@@ -230,15 +217,15 @@
 	    				@endif
 	    			</div>
     			</div><br/>
-    			<div class="form-group {{ $errors->has('blind_name') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">ชื่อคนพิการ : </label>
-    				<div class="col-md-9">
-	    				<input type="text" name="blind_name" class="form-control" placeholder="ชื่อคนพิการ"  value="{{ old('blind_name', $tab_member->blind_name) }}">
-	    				@if($errors->has('blind_name'))
-	    				<span class="help-block">{{ $errors->first('blind_name') }}</span>
-	    				@endif
-	    			</div>
-    			</div><br/>
+				<div class="form-group {{ $errors->has('present_address') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">ที่อยุ่ปัจจุบัน : </label>
+					<div class="col-md-9">
+						<textarea name="present_address" class="form-control" cols="30" rows="4" placeholder="กรอกที่อยู่ปัจจุบัน">{{ old('present_address', $tab_member->present_address) }}</textarea>
+						@if($errors->has('present_address'))
+							<span class="help-block">{{ $errors->first('present_address') }}</span>
+						@endif
+					</div>
+				</div><br/>
     			<div class="form-group {{ $errors->has('blind_no') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">หมายเลขบัตรคนพิการ : </label>
     				<div class="col-md-9">

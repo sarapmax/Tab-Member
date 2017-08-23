@@ -16,7 +16,7 @@
         <h5>ข้อมูลส่วนตัว</h5>
         <table class="table table-striped">
             <tr>
-                <td>อีเมล์</td>
+                <td>อีเมล</td>
                 <td>{{ auth()->guard('user')->user()->email }}</td>
             </tr>
             <tr>

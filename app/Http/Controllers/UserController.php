@@ -40,7 +40,7 @@ class UserController extends Controller
     		'firstname' => 'required',
     		'lastname' => 'required',
     		'phone_number' => 'required|alpha_num|digits:10',
-    		'branch' => 'required',
+    		'geography_id' => 'required',
             'admin' => 'required',
             'active' => 'required',
     	]);
@@ -53,7 +53,7 @@ class UserController extends Controller
     	$user->firstname = $request->firstname;
     	$user->lastname = $request->lastname;
     	$user->phone_number = $request->phone_number;
-    	$user->branch = $request->branch;
+    	$user->geography_id = $request->geography_id;
     	$user->admin = $request->admin;
     	$user->active = $request->active;
 
@@ -84,7 +84,7 @@ class UserController extends Controller
     	if(auth()->guard('user')->attempt($credentials, $request->remember_token)) {
     		return redirect('/');
     	}else {
-    		alert()->error('อีเมล์ หรือรหัสผ่านไม่ถูกต้อง, กรุณาลองใหม่อีกครั้ง', 'ไม่สามารถเข้าสู่ระบบได้ !')->persistent('ปิด');
+    		alert()->error('อีเมล หรือรหัสผ่านไม่ถูกต้อง, กรุณาลองใหม่อีกครั้ง', 'ไม่สามารถเข้าสู่ระบบได้ !')->persistent('ปิด');
 
     		return redirect()->back();
     	}
@@ -132,7 +132,7 @@ class UserController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'phone_number' => 'required|alpha_num|digits:10',
-            'branch' => 'required',
+            'geography_id' => 'required',
             'active' => 'required', 
         ]);
 
@@ -143,7 +143,7 @@ class UserController extends Controller
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->phone_number = $request->phone_number;
-        $user->branch = $request->branch;
+        $user->geography_id = $request->geography_id;
         $user->admin = $request->admin;
         $user->active = $request->active;
 

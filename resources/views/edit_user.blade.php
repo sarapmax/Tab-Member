@@ -10,7 +10,7 @@
 			{{ csrf_field() }}
         <input type="hidden" name="user_id" value="{{ $user->id }}">
 	    	<div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-	    		<label for="email" class="control-label col-md-2">อีเมล์</label>
+	    		<label for="email" class="control-label col-md-2">อีเมล</label>
                	<div class="col-md-8">
                   	<input type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}">
                   	@if($errors->has('email'))
@@ -69,12 +69,17 @@
             	</div>
       		</div>
 
-      		<div class="form-group {{ $errors->has('branch') ? 'has-error' : '' }}">
-      			<label for="branch" class="control-label col-md-2">สาขา</label>
+      		<div class="form-group {{ $errors->has('geography_id') ? 'has-error' : '' }}">
+      			<label for="geography_id" class="control-label col-md-2">สาขา</label>
         		<div class="col-md-8">
-          			<input type="branch" name="branch" id="branch" class="form-control" value="{{ old('branch', $user->branch) }}">
-          			@if($errors->has('branch'))
-		                <span class="help-block">{{ $errors->first('branch') }}</span>
+					<select class="form-control" name="geography_id">
+						<option value="">-- เลือกสาขา --</option>
+						@foreach(App\Geography::all() as $geography)
+							<option value="{{ $geography->id }}" @if(old('geography_id', $user->geography_id) == $geography->id) selected @endif>สาขา {{ $geography->name }}</option>
+						@endforeach
+					</select>
+          			@if($errors->has('geography_id'))
+		                <span class="help-block">{{ $errors->first('geography_id') }}</span>
 		            @endif
         		</div>
       		</div>
@@ -83,7 +88,7 @@
         		<label for="admin" class="control-label col-md-2">สถานะผู้ใช้</label>
         		<div class="col-md-8">
         			<div class="radio">
-        				<label><input type="radio" @if(old('admin', $user->admin) == 0) checked @endif name="admin" value="0">ผู้ใช้</label>
+        				<label><input type="radio" @if(old('admin', $user->admin) == 0) checked @endif name="admin" value="0">สต๊าฟ</label>
         			</div>
         			<div class="radio">
         				<label><input type="radio" @if(old('admin', $user->admin) == 1) checked @endif name="admin" value="1">แอดมิน</label>
@@ -100,8 +105,9 @@
       		<div class="form-group">
       			<div class="col-md-offset-2 col-md-8">
 	                <input type="hidden" name="active" value="1">
-	                <a href="{{ url('manage_user') }}" class="btn btn-default"><i class="fa fa-arrow-left"> </i> กลับ</a>
-	          		<button type="submit" class="btn btn-primary"> ยืนยัน</button>
+	                <a href="{{ url('manage_user') }}" class="btn btn-warning">ย้อนกลับ</a>
+	          		<button type="submit" class="btn btn-primary"> ตกลง</button>
+					<input type="reset" class="btn btn-default" value="Clear">
           		</div>
       		</div>
 		</form>

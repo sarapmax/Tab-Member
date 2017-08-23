@@ -30,7 +30,10 @@ class ReportController extends Controller
 
     	$input['geography'] = Geography::find($request->geography_id);
     	$input['province'] = Province::find($request->province_id);
+    	$input['period_type'] = $request->period_type;
     	$input['blind_level'] = $request->blind_level;
+    	$input['education_level'] = $request->education_level;
+    	$input['gender'] = $request->gender;
     	$input['start_age'] = $request->start_age;
     	$input['end_age'] = $request->end_age;
 
@@ -47,8 +50,20 @@ class ReportController extends Controller
                     $q->where('provinces.id', $request->province_id);
                 }
 
+                if($request->period_type) {
+                    $q->where('tab_members.period_type', $request->period_type);
+                }
+
                 if($request->blind_level) {
                     $q->where('tab_members.blind_level', $request->blind_level);
+                }
+
+                if($request->education_level) {
+                    $q->where('tab_members.education_level', $request->education_level);
+                }
+
+                if($request->gender) {
+                    $q->where('tab_members.gender', $request->gender);
                 }
 
                 if($request->start_age && $request->end_age) {
@@ -87,32 +102,36 @@ class ReportController extends Controller
             if(!empty($data) && $data->count()){
                 foreach ($data as $index => $value) {
                     if($index > 1) {
-                        $subDistrict = SubDistrict::whereName($value->district)->first();
-                        $namePrefix = NamePrefix::whereName($value->prefix)->first();
+                        $subDistrict = SubDistrict::whereName($value->sub_district)->first();
+                        $namePrefix = NamePrefix::whereName($value->name_prefix)->first();
                         $province = Province::whereName($value->province)->first();
                         $tab_member_count = TabMember::count();
                         TabMember::create([
-                                    'old_no' => (string) $value->member_no_old,
-                                    'no' => $this->tabMemberController->genMemberNumber(null, !empty($province->id) ? $province->id : null, date('y'), $tab_member_count + ($index + 1)),
+                                    'old_no' => (string) $value->old_no,
+                                    'no' => $this->tabMemberController->genMemberNumber(
+                                        $value->guarantor_type,
+                                        !empty($province->id) ? $province->id : null,
+                                        date('y'),
+                                        $tab_member_count + ($index + 1)
+                                    ),
                                     'name_prefix_id' => !empty($namePrefix->id) ? $namePrefix->id : null,
                                     'firstname' => $value->firstname,
-                                    'lastname' => $value->surname,
+                                    'lastname' => $value->lastname,
                                     'gender' => $value->gender,
                                     'nationality' => $value->nationality,
                                     'race' => $value->race,
                                     'religion' => $value->religion,
-                                    'idcard' => (string) $value->id_card,
-                                    'home_number' => $value->home_no,
+                                    'idcard' => (string) $value->idcard,
+                                    'home_number' => $value->home_number,
                                     'moo' => (string) $value->moo,
                                     'village' => $value->village,
                                     'soi' => $value->soi,
                                     'road' => $value->road,
                                     'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
                                     'email' => $value->email,
-                                    'phone_number' => $value->mobile,
-                                    'type' => $value->type,
+                                    'phone_number' => $value->phone_number,
                                     'period_type' => $value->period_type,
-                                    'blind_name' => $value->blind_name,
+                                    'present_address' => $value->present_address,
                                     'blind_no' => $value->blind_no,
                                     'blind_level' => $value->blind_level,
                                     'blind_cause' => $value->blind_cause,
@@ -122,13 +141,13 @@ class ReportController extends Controller
                                     'status' => $value->status,
                                     'career' => $value->career,
                                     'training' => $value->training,
-                                    'salary' => $value->sal,
+                                    'salary' => $value->salary,
                                     'guarantor_type' => $value->guarantor_type,
                                     'guarantor_name' => $value->guarantor_name,
                                     'remark' => $value->remark,
                                     'dead' => $value->dead,
                                     'dead_date' => $this->validateDate($value->dead_date) ? $value->dead_date : null,
-                                    'dead_no' => $value->dead_no,
+                                    'dead_no' => (string) $value->dead_no,
                                     'age' => $this->validateDate($value->birthday) ? 542 - calAge($value->birthday) : null,
                                 ]);
                     }

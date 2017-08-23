@@ -1,6 +1,6 @@
 @extends('layout.user')
 
-@section('header-title', 'ข้อมูลสมาชิก &raquo; บัตรสมาชิก &raquo; ' . $tab_member->name_prefix->name . ' ' . $tab_member->firstname . ' ' . $tab_member->lastname)
+@section('header-title', 'ข้อมูลสมาชิก &raquo; บัตรสมาชิก &raquo; ' . $tab_member->firstname . ' ' . $tab_member->lastname)
 
 @section('content')
 
@@ -29,12 +29,16 @@
                         </form>
                     </div>
                     <div class="col-md-6">
-                        <div class="col-md-4"><p>หมายเลขสมาชิก : </p></div>
+                        <div class="col-md-4"><p><b>ประเภทสมาชิก : </b></p></div>
+                        <div class="col-md-6"><p>{{ $tab_member->period_type }}</p></div>
+                        <div class="col-md-4"><p><b>หมายเลขสมาชิก : </b></p></div>
                         <div class="col-md-6"><p>{{ $tab_member->no }}</p></div>
-                        <div class="col-md-4"><p>ชื่อ - นามสกุล : </p></div>
-                        <div class="col-md-6"><p>{{ $tab_member->name_prefix->name . ' ' . $tab_member->firstname . ' ' . $tab_member->lastname }}</p></div>
-                        <div class="col-md-4"><p>หมายเลขบัตรประชาชน : </p></div>
+                        <div class="col-md-4"><p><b>ชื่อ - นามสกุล : </b></p></div>
+                        <div class="col-md-6"><p>{{ !empty($tab_member->name_prefix->name) ? $tab_member->name_prefix->name : '' }} {{ $tab_member->firstname . ' ' . $tab_member->lastname }}</p></div>
+                        <div class="col-md-4"><p><b>หมายเลขบัตรประชาชน : </b></p></div>
                         <div class="col-md-6"><p>{{ $tab_member->idcard }}</p></div>
+                        <div class="col-md-4"><p><b>สถานะ : </b></p></div>
+                        <div class="col-md-6"><p>{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิต' }}</p></div>
                     </div>
                 </div>
                 <hr>
@@ -44,23 +48,27 @@
                         <th style="width:15%;">บ้านเลขที่</th>
                         <td style="width:20%;">{{ $tab_member->home_number }}</td>
                         <th style="width:15%;">หมู่</th>
-                        <td>{{ $tab_member->moo }} {{ $tab_member->village ? '(หมู่บ้าน ' . $tab_member->village . ')' : '' }}</td>
+                        <td>{{ $tab_member->moo }}</td>
                     </tr>
                     <tr>
-                        <th>ซอย</th>
+                        <th>หมู่บ้าน/อาคาร/ชั้น/ตึก</th>
+                        <td>{{ $tab_member->village }}</td>
+                        <th>ซอย/ตรอก</th>
                         <td>{{ $tab_member->soi }}</td>
+                    </tr>
+                    <tr>
                         <th>ถนน</th>
                         <td>{{ $tab_member->road }}</td>
-                    </tr>
-                    <tr>
                         <th>ตำบล/แขวง</th>
                         <td>{{ $tab_member->sub_district->name }}</td>
-                        <th>อำเภอ/เขต</th>
-                        <td>{{ $tab_member->sub_district->district->name }}</td>
                     </tr>
                     <tr>
+                        <th>อำเภอ/เขต</th>
+                        <td>{{ $tab_member->sub_district->district->name }}</td>
                         <th>จังหวัด</th>
                         <td>{{ $tab_member->sub_district->district->province->name }}</td>
+                    </tr>
+                    <tr>
                         <th>รหัสไปรษณีย์</th>
                         <td>{{ $tab_member->sub_district->zipcode->zipcode }}</td>
                     </tr>
@@ -129,8 +137,7 @@
     }
 
     function uploadPhotoToServer() {
-        console.log('ff')
-        var url = '{{ url('tab_member/upload_profile_img') }}';                
+        var url = '{{ url('tab_member/upload_profile_img') }}';
         var image = $('#photo').attr('src');
         // Split the base64 string in data and contentType
         var block = image.split(";");

@@ -26,9 +26,8 @@ class TabMember extends Model
         'sub_district_id',
         'email',
         'phone_number',
-        'type',
         'period_type',
-        'blind_name',
+        'present_address',
         'blind_no',
         'blind_level',
         'blind_cause',
@@ -60,5 +59,9 @@ class TabMember extends Model
 
     public function welfare() {
     	return $this->hasMany('App\Welfare');
+    }
+
+    public function service_fees() {
+        return $this->hasMany('App\ServiceFee', 'tab_member_no', 'no');
     }
 }

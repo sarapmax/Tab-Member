@@ -30,4 +30,8 @@ class User extends Authenticatable
     public function welfare() {
         return $this->hasMany('App\Welfare');
     }
+
+    public function geography() {
+        return $this->belongsTo('App\Geography');
+    }
 }
