@@ -12,19 +12,19 @@
 
                 <div class="form-group">
                     <div class="col-lg-2">
-                        <label for="no">รหัสสมาชิก	</label>
+                        <label style="font-size: 12px;" for="no">รหัสสมาชิก	</label>
                         <input type="text" class="form-control" id="no" name="no" value="{{ $filters['no'] }}">
                     </div>
                     <div class="col-lg-3">
-                        <label for="name">ชื่อ-นามสกุล</label>
+                        <label style="font-size: 12px;" for="name">ชื่อ-นามสกุล</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ $filters['name'] }}">
                     </div>
                     <div class="col-lg-2">
-                        <label for="phone_number">โทรศัพท์มือถือ</label>
+                        <label style="font-size: 12px;" for="phone_number">โทรศัพท์มือถือ</label>
                         <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $filters['phone_number'] }}">
                     </div>
                     <div class="col-lg-2">
-                        <label for="idcard">หมายเลขบัตรประชาชน</label>
+                        <label style="font-size: 12px;" for="idcard">หมายเลขบัตรประชาชน</label>
                         <input type="text" class="form-control" id="idcard" name="idcard" value="{{ $filters['idcard'] }}">
                     </div>
                     <div class="col-lg-1">
