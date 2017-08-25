@@ -7,6 +7,8 @@
 <div class="card">
     <div class="card-body">
         <a href="{{ route('tab_member.edit', $tab_member->no) }}" class="btn btn-warning"><i class="fa fa-edit"> </i> แก้ไขข้อมูล</a>
+        <a href="{{ url('tab_member/' . $tab_member->no . '/generate/download') }}" class="btn btn-success"><i class="ion-ios-download"> </i> ดาวโหลด</a>
+        <a target="_blank" href="{{ url('tab_member/' . $tab_member->no . '/generate/print') }}" class="btn btn-primary"><i class="ion-printer"> </i> ปริ๊น</a>
         <fieldset>
             <h5>ข้อมูลส่วนตัว</h5>
             <table class="table table-striped">

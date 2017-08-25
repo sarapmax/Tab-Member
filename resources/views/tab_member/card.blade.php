@@ -37,8 +37,6 @@
                         <div class="col-md-6"><p>{{ !empty($tab_member->name_prefix->name) ? $tab_member->name_prefix->name : '' }} {{ $tab_member->firstname . ' ' . $tab_member->lastname }}</p></div>
                         <div class="col-md-4"><p><b>หมายเลขบัตรประชาชน : </b></p></div>
                         <div class="col-md-6"><p>{{ $tab_member->idcard }}</p></div>
-                        <div class="col-md-4"><p><b>สถานะ : </b></p></div>
-                        <div class="col-md-6"><p>{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิต' }}</p></div>
                     </div>
                 </div>
                 <hr>
@@ -71,6 +69,10 @@
                     <tr>
                         <th>รหัสไปรษณีย์</th>
                         <td>{{ $tab_member->sub_district->zipcode->zipcode }}</td>
+                    </tr>
+                    <tr>
+                        <th>สถานะ</th>
+                        <td>{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิต' }}</td>
                     </tr>
                 </table>
             </div>

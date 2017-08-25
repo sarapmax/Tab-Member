@@ -24,6 +24,7 @@
                         <th>สิทธิ์</th>
                         <th>แก้ไข</th>
                         <th>สถานะ</th>
+                        <th>ลบ</th>
         			</tr>
         		</thead>
                 <tbody>
@@ -46,6 +47,9 @@
                             @if(!$user->admin)
                             <a href="{{ url('manage_user/activate/'.$user->id) }}" class="btn btn-{{ $user->active ? 'success' : 'danger' }} btn-sm">{{ $user->active ? 'เปิดใช้งาน' : 'ปิดใช้งาน' }}</a>
                             @endif
+                        </td>
+                        <td>
+                            <a onclick="return confirm('ยืนยันการลบข้อมูล?')" href="{{ url('manage_user/delete/'.$user->id) }}" class="btn btn-xs btn-danger"><em class="ion-trash-b"></em></a>
                         </td>
                     </tr>
                     @endforeach

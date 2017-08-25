@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Province, App\TabMember, App\Welfare;
 use Image;
+use PDF;
 
 class TabMemberController extends Controller
 {
@@ -333,6 +334,20 @@ class TabMemberController extends Controller
             $tab_member->save();
 
             return redirect()->back();
+        }
+    }
+
+    public function generateTabMemberPdf($tab_member_no, $type) {
+        $tab_member = TabMember::whereNo($tab_member_no)->first();
+
+        $pdf = PDF::loadView('tab_member.document', ['tab_member' => $tab_member]);
+
+        $tabMemberName = $tab_member->firstname . ' ' . $tab_member->lastname;
+
+        if($type == 'download') {
+            return $pdf->download('ข้อมูลสมาชิก ' . $tabMemberName .'.pdf');
+        }else {
+            return $pdf->stream('ข้อมูลสมาชิก ' . $tabMemberName .'.pdf');
         }
 
     }

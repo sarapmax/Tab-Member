@@ -86,6 +86,14 @@
                             <span>จัดการผู้ใช้</span>
                         </a>
                     </li>
+                    <li {{ Request::segment(1) == 'tutorial_video' ? 'class=active' : '' }}>
+                        <a href="{{ route('video_tutorial.index') }}" class="ripple">
+                        <span class="nav-icon">
+                            <em class="ion-ios-videocam"></em>
+                        </span>
+                            <span>จัดการวีดีโอสอนใช้งาน</span>
+                        </a>
+                    </li>
                     @endif
                 </ul>
             </nav>

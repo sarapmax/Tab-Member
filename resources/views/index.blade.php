@@ -6,7 +6,12 @@
 
 <div class="card">
     <div class="card-body">
-    	Home
+        <fieldset>
+            <legend>วีดีโอนสอนใช้งานระบบ</legend>
+            <video controls style="width:100%;">
+                <source src="{{ url('video/' . $video->video) }}" type="video/mp4">
+            </video>
+        </fieldset>
     </div>
 </div>
 

@@ -35,6 +35,10 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
 	Route::resource('tab_member', 'TabMemberController');
 
+	Route::get('tab_member/{tab_member_no}/generate/{type}', 'TabMemberController@generateTabMemberPdf');
+
+	Route::get('tab_member/{tab_member_no}/generate/{type}', 'TabMemberController@generateTabMemberPdf');
+
 	Route::post('tab_member/upload_profile_img', 'TabMemberController@uploadProfileImg');
 
 	Route::get('tab_member/card/{tab_member_no}', 'TabMemberController@getTabMemberCard');
@@ -55,10 +59,6 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
 	Route::post('member_report', 'ReportController@getMemberReport');
 
-	Route::get('import', 'Reportcontroller@getImport');
-
-	Route::post('import', 'Reportcontroller@importReport');
-
 	Route::get('update_user', 'UserController@getUserBySession');
 
 	Route::post('manage_user/update', 'UserController@updateUser');
@@ -72,7 +72,15 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
 		Route::get('manage_user/edit/{user_id}', 'UserController@getUser');
 
+		Route::get('manage_user/delete/{user_id}', 'UserController@softDelete');
+
 		Route::get('show_user', 'UserController@show');
+
+        Route::get('import', 'Reportcontroller@getImport');
+
+        Route::post('import', 'Reportcontroller@importReport');
+
+        Route::resource('video_tutorial', 'TutorialVideoController');
 	});
 
 	//============= API ===========//

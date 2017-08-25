@@ -56,6 +56,7 @@ class UserController extends Controller
     	$user->geography_id = $request->geography_id;
     	$user->admin = $request->admin;
     	$user->active = $request->active;
+    	$user->soft_delete = 0;
 
         $user->save();
 
@@ -97,7 +98,7 @@ class UserController extends Controller
     }
 
     public function getManageUser() {
-    	$users = User::all();
+    	$users = User::whereSoftDelete(0)->get();
 
     	return view('manage_user', compact('users'));
     }
@@ -113,7 +114,7 @@ class UserController extends Controller
 
         $user->save();
 
-        alert()->success($user->active ? 'เปิดใช้งานผู้ใช้เรียบร้อยแล้ว' : 'ปิดใช้งานผู้ใช้เรียบร้อยแล้ว', 'สำเร็จ !');
+        alert()->success($user->active ? 'เปิดใช้งานผู้ใช้เรียบร้อยแล้ว' : 'ปิดใช้งานผู้ใช้เรียบร้อยแล้ว', 'สำเร็จ !')->persistent('ปิด');
         return redirect('manage_user');
     }
 
@@ -146,6 +147,7 @@ class UserController extends Controller
         $user->geography_id = $request->geography_id;
         $user->admin = $request->admin;
         $user->active = $request->active;
+        $user->soft_delete = 0;
 
         $user->save();
 
@@ -164,5 +166,17 @@ class UserController extends Controller
         $isAdmin = 0;
 
         return view('edit_user', compact('user', 'isAdmin'));
+    }
+
+    public function softDelete($id) {
+        $user = User::find($id);
+
+        $user->soft_delete = 1;
+
+        $user->save();
+
+        alert()->success('ลบข้อมูลเรียบร้อยแล้ว')->persistent('ปิด');
+
+        return redirect()->back();
     }
 }
