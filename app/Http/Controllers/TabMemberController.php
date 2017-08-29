@@ -50,7 +50,10 @@ class TabMemberController extends Controller
             }
 
             if(!empty($filters['phone_number'])) {
-                $tab_members->where('phone_number', 'like', '%' . $filters['phone_number'] . '%');
+                $tab_members->where(function($q) use ($filters) {
+                    $q->where('phone_number', 'LIKE', '%' . $filters['phone_number'] . '%')
+                        ->orWhere('mobile_number', 'LIKE', '%' . $filters['phone_number'] . '%');
+                });
             }
 
             if(!empty($filters['idcard'])) {
@@ -90,7 +93,8 @@ class TabMemberController extends Controller
             'sub_district_id' => 'required',
             'zipcode' => 'required|digits:5',
             'present_address' => 'required',
-            'phone_number' => 'required|numeric|digits:10',
+            'mobile_number' => 'required|numeric|digits:10',
+            'phone_number' => 'required|numeric|digits_between:9,10',
             'period_type' => 'required',
             'guarantor_type' => 'required',
             'guarantor_name' => 'required',
@@ -115,7 +119,9 @@ class TabMemberController extends Controller
         $tab_member->road = $request->road;
         $tab_member->sub_district_id = $request->sub_district_id;
         $tab_member->email = $request->email;
+        $tab_member->mobile_number = $request->mobile_number;
         $tab_member->phone_number = $request->phone_number;
+        $tab_member->phone_serial_number = $request->phone_serial_number;
         $tab_member->period_type = $request->period_type;
         $tab_member->blind_no = $request->blind_no;
         $tab_member->blind_level = $request->blind_level;
@@ -183,7 +189,8 @@ class TabMemberController extends Controller
             'sub_district_id' => 'required',
             'zipcode' => 'required|digits:5',
             'present_address' => 'required',
-            'phone_number' => 'required|numeric|digits:10',
+            'mobile_number' => 'required|numeric|digits:10',
+            'phone_number' => 'required|numeric|digits_between:9,10',
             'period_type' => 'required',
             'guarantor_type' => 'required',
             'guarantor_name' => 'required',
@@ -208,7 +215,9 @@ class TabMemberController extends Controller
         $tab_member->road = $request->road;
         $tab_member->sub_district_id = $request->sub_district_id;
         $tab_member->email = $request->email;
+        $tab_member->mobile_number = $request->mobile_number;
         $tab_member->phone_number = $request->phone_number;
+        $tab_member->phone_serial_number = $request->phone_serial_number;
         $tab_member->period_type = $request->period_type;
         $tab_member->blind_no = $request->blind_no;
         $tab_member->blind_level = $request->blind_level;

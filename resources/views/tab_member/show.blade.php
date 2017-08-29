@@ -49,8 +49,12 @@
                     <td>{{ $tab_member->religion }}</td>
                 </tr>
                 <tr>
+                    <td>เบอร์โทรศัพท์มือถือ :</td>
+                    <td>{{ $tab_member->mobile_number }}</td>
+                </tr>
+                <tr>
                     <td>เบอร์โทรศัพท์ :</td>
-                    <td>{{ $tab_member->phone_number }}</td>
+                    <td>{{ $tab_member->phone_number }} {{ $tab_member->phone_serial_number ? 'ต่อ' : '' }} {{ $tab_member->phone_serial_number }}</td>
                 </tr>
             </table>
         </fieldset>

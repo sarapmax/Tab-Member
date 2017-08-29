@@ -34,7 +34,7 @@
                                 {{ $service_fee->type }}
                                 @if($service_fee->type == 'อื่นๆ')
                                     <br/>
-                                    {{ $service_fee->type_other }}
+                                    {{ $service_fee->type_other }} {{ $service_fee->type_other_amount }} บาท
                                 @endif
                             </td>
                             <td>{{ $service_fee->start_date->format('d-m-Y') . ' ถึง ' . $service_fee->end_date->format('d-m-Y') }}</td>

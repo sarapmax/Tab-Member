@@ -194,14 +194,26 @@
 	    				@endif
 	    			</div>
     			</div><br/>
+				<div class="form-group {{ $errors->has('mobile_number') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ : </label>
+					<div class="col-md-9">
+						<input type="text" name="mobile_number" class="form-control" placeholder="กรอกเบอร์โทรศัพท์มือถือที่สามารถติดต่อได้"  value="{{ old('mobile_number') }}">
+						@if($errors->has('mobile_number'))
+							<span class="help-block">{{ $errors->first('mobile_number') }}</span>
+						@endif
+					</div>
+				</div><br/>
     			<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">เบอร์โทรศัพท์ : </label>
-    				<div class="col-md-9">
-	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"  value="{{ old('phone_number') }}">
+    				<div class="col-md-6">
+	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์"  value="{{ old('phone_number') }}">
 	    				@if($errors->has('phone_number'))
 	    				<span class="help-block">{{ $errors->first('phone_number') }}</span>
 	    				@endif
 	    			</div>
+					<div class="col-md-3">
+						<input type="text" name="phone_serial_number" class="form-control" placeholder="เบอร์ต่อ"  value="{{ old('phone_serial_number') }}">
+					</div>
     			</div><br/>
     			<div class="form-group {{ $errors->has('period_type') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">ประเภท : </label>

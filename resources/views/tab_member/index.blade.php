@@ -20,7 +20,7 @@
                         <input type="text" class="form-control" id="name" name="name" value="{{ $filters['name'] }}">
                     </div>
                     <div class="col-lg-2">
-                        <label style="font-size: 12px;" for="phone_number">โทรศัพท์มือถือ</label>
+                        <label style="font-size: 12px;" for="phone_number">เบอร์โทรศัพท์</label>
                         <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $filters['phone_number'] }}">
                     </div>
                     <div class="col-lg-2">
@@ -53,7 +53,7 @@
                     <td>{{ $i+1 }}</td>
                     <td>{{ $tab_member->no }}</td>
                     <td>{{ !empty($tab_member->name_prefix->name) ? $tab_member->name_prefix->name : '' }} {{ $tab_member->firstname . ' ' . $tab_member->lastname }}</td>
-                    <td>{{ $tab_member->phone_number }}</td>
+                    <td>{{ $tab_member->mobile_number }}</td>
                     <td style="width: 380px;">
                         <a target="_blank" href="{{ route('tab_member.show', $tab_member->no) }}" class="btn btn-default btn-xs"><em class="ion-person"></em> รายละเอียด</a>
                         <a target="_blank" href="{{ url('tab_member/card/'.$tab_member->no) }}" class="btn btn-primary btn-xs"><em class="ion-card"></em> บัตรสมาชิก</a>

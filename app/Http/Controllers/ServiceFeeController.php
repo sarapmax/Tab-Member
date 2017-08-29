@@ -49,7 +49,8 @@ class ServiceFeeController extends Controller
 
         if($request->type == 'อื่นๆ') {
             $rules += [
-                'type_other' => 'required'
+                'type_other' => 'required',
+                'type_other_amount' => 'required'
             ];
         }
 
@@ -63,6 +64,7 @@ class ServiceFeeController extends Controller
         $serviceFee->lastname = $request->lastname;
         $serviceFee->type = $request->type;
         $serviceFee->type_other = $request->type ? $request->type_other : null;
+        $serviceFee->type_other_amount = $request->type ? $request->type_other_amount : null;
         $serviceFee->start_date = date('Y-m-d', strtotime($request->start_date));
         $serviceFee->end_date = date('Y-m-d', strtotime($request->end_date));
         $serviceFee->staff_firstname = $request->staff_firstname;
@@ -123,7 +125,8 @@ class ServiceFeeController extends Controller
 
         if($request->type == 'อื่นๆ') {
             $rules += [
-                'type_other' => 'required'
+                'type_other' => 'required',
+                'type_other_amount' => 'required'
             ];
         }
 
@@ -137,6 +140,7 @@ class ServiceFeeController extends Controller
         $serviceFee->lastname = $request->lastname;
         $serviceFee->type = $request->type;
         $serviceFee->type_other = $request->type ? $request->type_other : null;
+        $serviceFee->type_other_amount = $request->type ? $request->type_other_amount : null;
         $serviceFee->start_date = date('Y-m-d', strtotime($request->start_date));
         $serviceFee->end_date = date('Y-m-d', strtotime($request->end_date));
         $serviceFee->staff_firstname = $request->staff_firstname;

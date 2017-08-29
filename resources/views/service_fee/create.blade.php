@@ -44,15 +44,26 @@
                             @endif
                         </div>
                     </div><br/>
-                    <div id="type-other" style="display: none;" class="form-group {{ $errors->has('type_other') ? 'has-error' : '' }}">
-                        <label for="" class="col-md-2 control-label">ระบุเพิ่มเติม</label>
-                        <div class="col-md-8">
-                            <input type="text" name="type_other" class="form-control" value="{{ old('type_other') }}">
-                            @if($errors->has('type_other'))
-                                <span class="help-block">{{ $errors->first('type_other') }}</span>
-                            @endif
-                        </div>
-                    </div><br/>
+                    <div id="type-other" style="display: none;">
+                        <div class="form-group {{ $errors->has('type_other') ? 'has-error' : '' }}">
+                            <label for="" class="col-md-2 control-label">ระบุเพิ่มเติม : </label>
+                            <div class="col-md-8">
+                                <input type="text" name="type_other" class="form-control" value="{{ old('type_other') }}">
+                                @if($errors->has('type_other'))
+                                    <span class="help-block">{{ $errors->first('type_other') }}</span>
+                                @endif
+                            </div>
+                        </div><br/>
+                        <div class="form-group {{ $errors->has('type_other_amount') ? 'has-error' : '' }}">
+                            <label for="" class="col-md-2 control-label">จำนวนเงิน : </label>
+                            <div class="col-md-2">
+                                <input type="number" name="type_other_amount" class="form-control" value="{{ old('type_other_amount') }}">
+                                @if($errors->has('type_other_amount'))
+                                    <span class="help-block">{{ $errors->first('type_other_amount') }}</span>
+                                @endif
+                            </div>
+                        </div><br/>
+                    </div>
                     <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
                         <label class="control-label col-md-2">ชำระค่าบำรุงตั้งแต่วันที่ : </label>
                         <div class="col-md-9">

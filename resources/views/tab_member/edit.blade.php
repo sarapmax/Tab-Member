@@ -195,14 +195,26 @@
 	    				@endif
 	    			</div>
     			</div><br/>
+				<div class="form-group {{ $errors->has('mobile_number') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ : </label>
+					<div class="col-md-9">
+						<input type="text" name="mobile_number" class="form-control" placeholder="กรอกเบอร์โทรศัพท์มือถือที่สามารถติดต่อได้"  value="{{ old('mobile_number', $tab_member->mobile_number) }}">
+						@if($errors->has('mobile_number'))
+							<span class="help-block">{{ $errors->first('mobile_number') }}</span>
+						@endif
+					</div>
+				</div><br/>
     			<div class="form-group {{ $errors->has('phone_number') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">เบอร์โทรศัพท์ : </label>
-    				<div class="col-md-9">
-	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"  value="{{ old('phone_number', $tab_member->phone_number) }}">
+    				<div class="col-md-6">
+	    				<input type="text" name="phone_number" class="form-control" placeholder="เบอร์โทรศัพท์"  value="{{ old('phone_number', $tab_member->phone_number) }}">
 	    				@if($errors->has('phone_number'))
 	    				<span class="help-block">{{ $errors->first('phone_number') }}</span>
 	    				@endif
 	    			</div>
+					<div class="col-md-3">
+						<input type="text" name="phone_serial_number" class="form-control" placeholder="เบอร์ต่อ"  value="{{ old('phone_serial_number', $tab_member->phone_serial_number) }}">
+					</div>
     			</div><br/>
     			<div class="form-group {{ $errors->has('period_type') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">ประเภท : </label>
@@ -362,6 +374,7 @@
     			</div><br/>
     			<div class="form-group">
     				<div class="col-md-offset-2 col-md-10">
+						<a href="{{ url('tab_member/' . $tab_member->no) }}" class="btn btn-warning">ย้อนกลับ</a>
     					<button type="submit" class="btn btn-primary"><em class="ion-android-checkbox-outline"></em> บันทึกข้อมูล</button>
     				</div>
     			</div>

@@ -26,6 +26,8 @@ class TabMember extends Model
         'sub_district_id',
         'email',
         'phone_number',
+        'phone_serial_number',
+        'mobile_number',
         'period_type',
         'present_address',
         'blind_no',
