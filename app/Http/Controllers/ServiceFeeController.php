@@ -65,8 +65,8 @@ class ServiceFeeController extends Controller
         $serviceFee->type = $request->type;
         $serviceFee->type_other = $request->type ? $request->type_other : null;
         $serviceFee->type_other_amount = $request->type ? $request->type_other_amount : null;
-        $serviceFee->start_date = date('Y-m-d', strtotime($request->start_date));
-        $serviceFee->end_date = date('Y-m-d', strtotime($request->end_date));
+        $serviceFee->start_date = new \DateTime($request->start_date);
+        $serviceFee->end_date = new \Datetime($request->end_date);
         $serviceFee->staff_firstname = $request->staff_firstname;
         $serviceFee->staff_lastname = $request->staff_lastname;
         $serviceFee->user_id = auth()->guard('user')->user()->id;
@@ -141,8 +141,8 @@ class ServiceFeeController extends Controller
         $serviceFee->type = $request->type;
         $serviceFee->type_other = $request->type ? $request->type_other : null;
         $serviceFee->type_other_amount = $request->type ? $request->type_other_amount : null;
-        $serviceFee->start_date = date('Y-m-d', strtotime($request->start_date));
-        $serviceFee->end_date = date('Y-m-d', strtotime($request->end_date));
+        $serviceFee->start_date = new \Datetime($request->start_date);
+        $serviceFee->end_date = new \DateTime($request->end_date);
         $serviceFee->staff_firstname = $request->staff_firstname;
         $serviceFee->staff_lastname = $request->staff_lastname;
         $serviceFee->user_id = auth()->guard('user')->user()->id;
