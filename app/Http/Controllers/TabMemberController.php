@@ -107,7 +107,7 @@ class TabMemberController extends Controller
         $tab_member->firstname = $request->firstname;
         $tab_member->lastname = $request->lastname;
         $tab_member->gender = $request->gender;
-        $tab_member->birthday = date('Y-m-d', strtotime($request->birthday));
+        $tab_member->birthday = new \DateTime($request->birthday);
         $tab_member->nationality = $request->nationality;
         $tab_member->race = $request->race;
         $tab_member->religion = $request->religion;
@@ -203,7 +203,7 @@ class TabMemberController extends Controller
         $tab_member->firstname = $request->firstname;
         $tab_member->lastname = $request->lastname;
         $tab_member->gender = $request->gender;
-        $tab_member->birthday = date('Y-m-d', strtotime($request->birthday));
+        $tab_member->birthday = new \DateTime($request->birthday);
         $tab_member->nationality = $request->nationality;
         $tab_member->race = $request->race;
         $tab_member->religion = $request->religion;

@@ -79,7 +79,7 @@ class WelfareController extends Controller
 
         $welfare->withdraw_type = $request->withdraw_type;
         $welfare->evidence_name = $request->evidence_name;
-        $welfare->withdraw_date = date('Y-m-d', strtotime($request->withdraw_date));
+        $welfare->withdraw_date = new \DateTime($request->withdraw_date);
         $welfare->tab_member_no = $request->tab_member_no;
         $welfare->user_id = auth()->guard('user')->user()->id;
         $welfare->withdraw_firstname = $request->withdraw_firstname;
@@ -91,7 +91,7 @@ class WelfareController extends Controller
         $welfare->staff_firstname = $request->staff_firstname;
         $welfare->staff_lastname = $request->staff_lastname;
         $welfare->geography_id = $request->geography_id;
-        $welfare->receive_welfare_date = $request->receive_welfare_date ? date('Y-m-d', strtotime($request->receive_welfare_date)) : null;
+        $welfare->receive_welfare_date = $request->receive_welfare_date ? new \DateTime($request->receive_welfare_date) : null;
         $welfare->receive_welfare = $request->receive_welfare;
 
         $welfare->save();
@@ -182,7 +182,7 @@ class WelfareController extends Controller
 
         $welfare->withdraw_type = $request->withdraw_type;
         $welfare->evidence_name = $request->evidence_name;
-        $welfare->withdraw_date = date('Y-m-d', strtotime($request->withdraw_date));
+        $welfare->withdraw_date = new \DateTime($request->withdraw_date);
         $welfare->tab_member_no = $request->tab_member_no;
         $welfare->user_id = auth()->guard('user')->user()->id;
         $welfare->withdraw_firstname = $request->withdraw_firstname;
@@ -194,7 +194,7 @@ class WelfareController extends Controller
         $welfare->staff_firstname = $request->staff_firstname;
         $welfare->staff_lastname = $request->staff_lastname;
         $welfare->geography_id = $request->geography_id;
-        $welfare->receive_welfare_date = $request->receive_welfare_date ? date('Y-m-d', strtotime($request->receive_welfare_date)) : null;
+        $welfare->receive_welfare_date = $request->receive_welfare_date ? new \Datetime($request->receive_welfare_date) : null;
         $welfare->receive_welfare = $request->receive_welfare;
 
         $welfare->save();
