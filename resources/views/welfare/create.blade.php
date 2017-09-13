@@ -9,6 +9,9 @@
             <input type="hidden" name="tab_member_no" value="{{ $tab_member->no }}">
             {{ csrf_field() }}
             <fieldset>
+                @if($errors)
+                    {{ print_r($errors) }}
+                @endif
                 <legend>ส่วนที่ 1 ยื่นคำร้องขอเบิกสวัสดิการ</legend>
                 <div class="form-group {{ $errors->has('withdraw_type') ? 'has-error' : '' }}">
                     <label for="" class="col-md-2 control-label"></label>
@@ -53,39 +56,39 @@
                         @endif
                     </div>
                 </div><br/>
-                <div class="form-group {{ $errors->has('evidence_name') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('evidence_names') ? 'has-error' : '' }}">
                     <label for="" class="col-md-2 control-label"></label>
                     <div class="col-md-8">
                         <div style="display:none;margin-bottom: 20px;" id="medical-or-ermergency">
                             <label>
-                                <input type="radio" value="ใบเสร็จค่ารักษาพยาบาล" name="evidence_name" @if(old('evidence_name') == 'ใบเสร็จค่ารักษาพยาบาล') checked @endif> &nbsp;&nbsp;ใบเสร็จค่ารักษาพยาบาล
+                                <input type="checkbox" value="ใบเสร็จค่ารักษาพยาบาล" name="evidence_names[]" @if(is_array(old('evidence_names')) && in_array('ใบเสร็จค่ารักษาพยาบาล', old('evidence_names'))) checked @endif> &nbsp;&nbsp;ใบเสร็จค่ารักษาพยาบาล
                             </label><br/>
                             <label>
-                                <input type="radio" value="ใบรับรองแพทย์" name="evidence_name" @if(old('evidence_name') == 'ใบรับรองแพทย์') checked @endif> &nbsp;&nbsp;ใบรับรองแพทย์
+                                <input type="checkbox" value="ใบรับรองแพทย์" name="evidence_names[]" @if(is_array(old('evidence_names')) && in_array('ใบรับรองแพทย์', old('evidence_names'))) checked @endif> &nbsp;&nbsp;ใบรับรองแพทย์
                             </label><br/>
                             <label>
-                                <input type="radio" value="สำเนาบัตรสมาชิกสมาคมฯ" name="evidence_name" @if(old('evidence_name') == 'สำเนาบัตรสมาชิกสมาคมฯ') checked @endif> &nbsp;&nbsp;สำเนาบัตรสมาชิกสมาคมฯ
+                                <input type="checkbox" value="สำเนาบัตรสมาชิกสมาคมฯ" name="evidence_names[]" @if(is_array(old('evidence_names')) && in_array('สำเนาบัตรสมาชิกสมาคมฯ', old('evidence_names'))) checked @endif> &nbsp;&nbsp;สำเนาบัตรสมาชิกสมาคมฯ
                             </label>
                         </div>
                         <div style="display:none;margin-bottom: 20px;" id="dead">
                             <label>
-                                <input type="radio" value="ใบมรณะบัตร" name="evidence_name" @if(old('evidence_name') == 'ใบมรณะบัตร') checked @endif> &nbsp;&nbsp;ใบมรณะบัตร
+                                <input type="checkbox" value="ใบมรณะบัตร" name="evidence_names[]" @if(is_array(old('evidence_names')) && in_array('ใบมรณะบัตร', old('evidence_names'))) checked @endif> &nbsp;&nbsp;ใบมรณะบัตร
                             </label><br/>
                             <label>
-                                <input type="radio" value="บัตรสมาชิกสมาคมฯ (ตัวจริง)" name="evidence_name" @if(old('evidence_name') == 'บัตรสมาชิกสมาคมฯ (ตัวจริง)' ) checked @endif> &nbsp;&nbsp;บัตรสมาชิกสมาคมฯ (ตัวจริง)
+                                <input type="checkbox" value="บัตรสมาชิกสมาคมฯ (ตัวจริง)" name="evidence_names[]" @if(is_array(old('evidence_names')) && in_array('บัตรสมาชิกสมาคมฯ (ตัวจริง)', old('evidence_names'))) checked @endif> &nbsp;&nbsp;บัตรสมาชิกสมาคมฯ (ตัวจริง)
                             </label>
                         </div>
-                        @if($errors->has('evidence_name') && old('type'))
-                            <span class="help-block">{{ $errors->first('evidence_name') }}</span>
+                        @if($errors->has('evidence_names') && old('type'))
+                            <span class="help-block">{{ $errors->first('evidence_names') }}</span>
                         @endif
                     </div>
                 </div>
-                <div class="form-group {{ $errors->has('evidence') ? 'has-error' : '' }}">
+                <div class="form-group {{ $errors->has('evidences') ? 'has-error' : '' }}">
                     <label class="control-label col-md-2">อัพโหลดหลักฐาน : </label>
                     <div class="col-md-9">
-                        <input type="file" name="evidence" class="form-control">
-                        @if($errors->has('evidence'))
-                            <span class="help-block">{{ $errors->first('evidence') }}</span>
+                        <input type="file" name="evidences[]" multiple class="form-control">
+                        @if($errors->has('evidences'))
+                            <span class="help-block">{{ $errors->first('evidences') }}</span>
                         @endif
                     </div>
                 </div><br/>

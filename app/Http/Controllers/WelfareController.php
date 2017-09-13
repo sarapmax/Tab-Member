@@ -42,7 +42,7 @@ class WelfareController extends Controller
             'withdraw_phone_number' => 'required|numeric|digits:10',
             'type' => 'required',
             'amount' => 'required|numeric',
-            'evidence_name' => 'required',
+            'evidence_names' => 'required',
             'withdraw_date' => 'required',
             'staff_firstname' => 'required',
             'staff_lastname' => 'required',
@@ -67,18 +67,30 @@ class WelfareController extends Controller
 
         $welfare = new Welfare;
 
-        if($request->hasFile('evidence')) {
-            $evidence = $request->file('evidence');
+        if($request->hasFile('evidences')) {
+            $evidences = $request->file('evidences');
 
-            $evidenceName = time() . '-' . $evidence->getClientOriginalName();
+            $evidenceArray = [];
 
-            $evidence->move('welfare_evidences/', $evidenceName);
+            foreach($evidences as $index => $evidence) {
 
-            $welfare->evidence = $evidenceName;
+                $evidenceName = time() . '-' . $evidence->getClientOriginalName();
+
+                $evidence->move('welfare_evidences/', $evidenceName);
+
+                $evidenceArray[$index] = $evidenceName;
+            }
+
+            $welfare->evidence = implode('|', $evidenceArray);
+        }
+
+        if($request->evidence_names) {
+            $evidenceNames = implode('|', $request->evidence_names);
+
+            $welfare->evidence_name = $evidenceNames;
         }
 
         $welfare->withdraw_type = $request->withdraw_type;
-        $welfare->evidence_name = $request->evidence_name;
         $welfare->withdraw_date = new \DateTime($request->withdraw_date);
         $welfare->tab_member_no = $request->tab_member_no;
         $welfare->user_id = auth()->guard('user')->user()->id;
@@ -143,7 +155,7 @@ class WelfareController extends Controller
             'withdraw_phone_number' => 'required|numeric|digits:10',
             'type' => 'required',
             'amount' => 'required|numeric',
-            'evidence_name' => 'required',
+            'evidence_names' => 'required',
             'withdraw_date' => 'required',
             'staff_firstname' => 'required',
             'staff_lastname' => 'required',
@@ -168,20 +180,33 @@ class WelfareController extends Controller
 
         $welfare = Welfare::find($id);
 
-        if($request->hasFile('evidence')) {
-            unlink('welfare_evidences/' . $welfare->evidence);
+        if($request->hasFile('evidences')) {
+            $evidences = $request->file('evidences');
 
-            $evidence = $request->file('evidence');
+            $evidenceArray = [];
 
-            $evidenceName = time() . '-' . $evidence->getClientOriginalName();
+            foreach(explode('|', $welfare->evidence) as $evidence) {
+                unlink('welfare_evidences/' . $evidence);
+            }
 
-            $evidence->move('welfare_evidences/', $evidenceName);
+            foreach($evidences as $index => $evidence) {
+                $evidenceName = time() . '-' . $evidence->getClientOriginalName();
 
-            $welfare->evidence = $evidenceName;
+                $evidence->move('welfare_evidences/', $evidenceName);
+
+                $evidenceArray[$index] = $evidenceName;
+            }
+
+            $welfare->evidence = implode('|', $evidenceArray);
+        }
+
+        if($request->evidence_names) {
+            $evidenceNames = implode('|', $request->evidence_names);
+
+            $welfare->evidence_name = $evidenceNames;
         }
 
         $welfare->withdraw_type = $request->withdraw_type;
-        $welfare->evidence_name = $request->evidence_name;
         $welfare->withdraw_date = new \DateTime($request->withdraw_date);
         $welfare->tab_member_no = $request->tab_member_no;
         $welfare->user_id = auth()->guard('user')->user()->id;
@@ -215,7 +240,9 @@ class WelfareController extends Controller
         $welfare = Welfare::find($id);
 
         if($welfare->evidence) {
-            unlink('welfare_evidences/' . $welfare->evidence);
+            foreach(explode('|', $welfare->evidence) as $evidence) {
+                unlink('welfare_evidences/' . $evidence);
+            }
         }
 
         $welfare->delete();
