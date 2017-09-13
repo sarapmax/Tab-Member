@@ -145,7 +145,7 @@
                     <td>{{ $tab_member->dead_date->format('d-m-Y') }}</td>
                 </tr>
                 <tr>
-                    <td>หมายเลขใบเสียชีวิต :</td>
+                    <td>หมายเลขมรณบัตร :</td>
                     <td>{{ $tab_member->dead_no }}</td>
                 </tr>
                 @endif

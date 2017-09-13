@@ -406,7 +406,7 @@
 					</div>
 				</div><br/>
 				<div class="form-group {{ $errors->has('dead_no') ? 'has-error' : '' }}">
-					<label class="control-label col-md-2">หมายเลขใบเสียชีวิต : </label>
+					<label class="control-label col-md-2">หมายเลขมรณบัตร : </label>
 					<div class="col-md-9">
 						<input type="text" name="dead_no" class="form-control" value="{{ old('dead_no', $tab_member->dead_no) }}">
 						@if($errors->has('dead_no'))
