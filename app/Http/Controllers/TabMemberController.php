@@ -231,6 +231,9 @@ class TabMemberController extends Controller
         $tab_member->salary = $request->salary;
         $tab_member->guarantor_type = $request->guarantor_type;
         $tab_member->guarantor_name = $request->guarantor_name;
+        $tab_member->dead = $request->dead;
+        $tab_member->dead_date = new \DateTime($request->dead_date);
+        $tab_member->dead_no = $request->dead_no;
 
         $tab_member->save();
 

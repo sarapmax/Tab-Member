@@ -105,7 +105,6 @@
       		<div class="form-group">
       			<div class="col-md-offset-2 col-md-8">
 	                <input type="hidden" name="active" value="1">
-	                <a href="{{ url('manage_user') }}" class="btn btn-warning">ย้อนกลับ</a>
 	          		<button type="submit" class="btn btn-primary"> ตกลง</button>
 					<input type="reset" class="btn btn-default" value="Clear">
           		</div>

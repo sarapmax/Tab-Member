@@ -63,6 +63,8 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
 	Route::post('manage_user/update', 'UserController@updateUser');
 
+    Route::get('show_user', 'UserController@show');
+
 	Route::group(['middleware' => 'admin'], function() {
 		Route::get('manage_user', 'UserController@getManageUser');
 
@@ -73,8 +75,6 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 		Route::get('manage_user/edit/{user_id}', 'UserController@getUser');
 
 		Route::get('manage_user/delete/{user_id}', 'UserController@softDelete');
-
-		Route::get('show_user', 'UserController@show');
 
         Route::get('import', 'Reportcontroller@getImport');
 

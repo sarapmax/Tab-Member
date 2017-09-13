@@ -62,7 +62,7 @@
     			<div class="form-group {{ $errors->has('birthday') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">วันเกิด : </label>
     				<div class="col-md-9">
-	    				<input type="text" name="birthday" class="form-control datepicker" placeholder="วันเกิด" value="{{ old('birthday', $tab_member->birthday->format('d/m/Y')) }}">
+	    				<input type="text" name="birthday" class="form-control datepicker" placeholder="วันเกิด" value="{{ old('birthday', $tab_member->birthday ? $tab_member->birthday->format('d-m-Y') : '') }}">
 	    				@if($errors->has('birthday'))
 	    				<span class="help-block">{{ $errors->first('birthday') }}</span>
 	    				@endif
@@ -100,7 +100,15 @@
 	    				<span class="help-block">{{ $errors->first('idcard') }}</span>
 	    				@endif
 	    			</div>
-    			</div><br/>
+    			</div><br/><div class="form-group {{ $errors->has('idcard') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">หมายเลขบัตรประชาชน : </label>
+					<div class="col-md-9">
+						<input type="text" name="idcard" class="form-control" placeholder="หมายเลขบัตรประชาชน" value="{{ old('idcard', $tab_member->idcard) }}">
+						@if($errors->has('idcard'))
+							<span class="help-block">{{ $errors->first('idcard') }}</span>
+						@endif
+					</div>
+				</div><br/>
     		</fieldset>
 
     		<fieldset>
@@ -371,14 +379,48 @@
 	    				<span class="help-block">{{ $errors->first('guarantor_name') }}</span>
 	    				@endif
 	    			</div>
-    			</div><br/>
-    			<div class="form-group">
-    				<div class="col-md-offset-2 col-md-10">
-						<a href="{{ url('tab_member/' . $tab_member->no) }}" class="btn btn-warning">ย้อนกลับ</a>
-    					<button type="submit" class="btn btn-primary"><em class="ion-android-checkbox-outline"></em> บันทึกข้อมูล</button>
-    				</div>
     			</div>
     		</fieldset>
+
+			<fieldset>
+				<legend>สถานะการมีชีวิต</legend>
+				<div class="form-group {{ $errors->has('dead') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">สถานะ : </label>
+					<div class="col-md-9">
+						<select class="form-control" name="dead">
+							<option @if(old('dead', $tab_member->dead) == 0) selected @endif value="0">มีชีวิตอยู่</option>
+							<option @if(old('dead', $tab_member->dead) == 1) selected @endif value="1">เสียชีวิต</option>
+						</select>
+						@if($errors->has('dead'))
+							<span class="help-block">{{ $errors->first('dead') }}</span>
+						@endif
+					</div>
+				</div><br/>
+				<div class="form-group {{ $errors->has('dead_date') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">วันที่เสียชีวิต : </label>
+					<div class="col-md-9">
+						<input type="text" name="dead_date" class="form-control datepicker" value="{{ old('dead_date', $tab_member->dead_date ? $tab_member->dead_date->format('d-m-Y') : '') }}">
+						@if($errors->has('dead_date'))
+							<span class="help-block">{{ $errors->first('dead_date') }}</span>
+						@endif
+					</div>
+				</div><br/>
+				<div class="form-group {{ $errors->has('dead_no') ? 'has-error' : '' }}">
+					<label class="control-label col-md-2">หมายเลขใบเสียชีวิต : </label>
+					<div class="col-md-9">
+						<input type="text" name="dead_no" class="form-control" value="{{ old('dead_no', $tab_member->dead_no) }}">
+						@if($errors->has('dead_no'))
+							<span class="help-block">{{ $errors->first('dead_no') }}</span>
+						@endif
+					</div>
+				</div><br/>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-10">
+						<a href="{{ url('tab_member/' . $tab_member->no) }}" class="btn btn-warning">ย้อนกลับ</a>
+						<button type="submit" class="btn btn-primary"><em class="ion-android-checkbox-outline"></em> บันทึกข้อมูล</button>
+					</div>
+				</div>
+			</fieldset>
     	</form>
     </div>
 </div>

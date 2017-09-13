@@ -63,7 +63,7 @@
             <table class="table table-striped">
                 <tr>
                     <td style="border-top: 0px;width: 20%;">ภูมิภาค : </td>
-                    <td style="border-top: 0;">{{ $tab_member->sub_district->district->province->geography->name }}</td>
+                    <td style="border-top: 0;">{{ $tab_member->sub_district ? $tab_member->sub_district->district->province->geography->name : '' }}</td>
                 </tr>
                 <tr>
                     <td>ที่อยู่ :</td>
@@ -130,6 +130,25 @@
                     <td>สมาชิกสามัญผู้รับรองคุณสมบัติ :</td>
                     <td>{{ $tab_member->guarantor_name }}</td>
                 </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <h5>สถานะการมีชีวิต</h5>
+            <table class="table table-striped">
+                <tr>
+                    <td style="border-top: 0px;width: 20%;">สถานะ : </td>
+                    <td style="border-top: 0;">{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิตอยู่' }}</td>
+                </tr>
+                @if($tab_member->dead)
+                <tr>
+                    <td>วันที่เสียชีวิต :</td>
+                    <td>{{ $tab_member->dead_date->format('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td>หมายเลขใบเสียชีวิต :</td>
+                    <td>{{ $tab_member->dead_no }}</td>
+                </tr>
+                @endif
             </table>
         </fieldset>
         <fieldset>
