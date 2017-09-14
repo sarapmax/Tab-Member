@@ -9,9 +9,6 @@
             <input type="hidden" name="tab_member_no" value="{{ $tab_member->no }}">
             {{ csrf_field() }}
             <fieldset>
-                @if($errors)
-                    {{ print_r($errors) }}
-                @endif
                 <legend>ส่วนที่ 1 ยื่นคำร้องขอเบิกสวัสดิการ</legend>
                 <div class="form-group {{ $errors->has('withdraw_type') ? 'has-error' : '' }}">
                     <label for="" class="col-md-2 control-label"></label>
