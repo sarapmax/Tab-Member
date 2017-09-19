@@ -246,15 +246,15 @@
 						@endif
 					</div>
 				</div><br/>
-    			<div class="form-group {{ $errors->has('blind_no') ? 'has-error' : '' }}">
-    				<label class="control-label col-md-2">หมายเลขบัตรคนพิการ : </label>
-    				<div class="col-md-9">
-	    				<input type="text" name="blind_no" class="form-control" placeholder="หมายเลขบัตรคนพิการ"  value="{{ old('blind_no', $tab_member->blind_no) }}">
-	    				@if($errors->has('blind_no'))
-	    				<span class="help-block">{{ $errors->first('blind_no') }}</span>
-	    				@endif
-	    			</div>
-    			</div><br/>
+    			{{--<div class="form-group {{ $errors->has('blind_no') ? 'has-error' : '' }}">--}}
+    				{{--<label class="control-label col-md-2">หมายเลขบัตรคนพิการ : </label>--}}
+    				{{--<div class="col-md-9">--}}
+	    				{{--<input type="text" name="blind_no" class="form-control" placeholder="หมายเลขบัตรคนพิการ"  value="{{ old('blind_no', $tab_member->blind_no) }}">--}}
+	    				{{--@if($errors->has('blind_no'))--}}
+	    				{{--<span class="help-block">{{ $errors->first('blind_no') }}</span>--}}
+	    				{{--@endif--}}
+	    			{{--</div>--}}
+    			{{--</div><br/>--}}
     			<div class="form-group {{ $errors->has('blind_level') ? 'has-error' : '' }}">
     				<label class="control-label col-md-2">ระดับการมองเห็น : </label>
     				<div class="col-md-9">

@@ -69,7 +69,7 @@
                     <td>ที่อยู่ :</td>
                     <td>
                         {{ $tab_member->home_number }} หมู่ที่ {{ $tab_member->moo }} {{ $tab_member->village ? 'หมู่บ้าน ' . $tab_member->village : '' }} {{ $tab_member->soi ? 'ซอย' . $tab_member->soi : '' }}  {{ $tab_member->road ? 'ถนน ' . $tab_member->road : '' }}<br/>
-                         ต.{{ $tab_member->sub_district->name }} อ.{{ $tab_member->sub_district->district->name }}  จ.{{ $tab_member->sub_district->district->province->name }} {{ $tab_member->sub_district->zipcode->zipcode }}
+                         ต.{{ $tab_member->sub_district ? $tab_member->sub_district->name : '' }} อ.{{ $tab_member->sub_district ? $tab_member->sub_district->district->name : '' }}  จ.{{ $tab_member->sub_district->district->province->name }} {{ $tab_member->sub_district->zipcode->zipcode }}
 
                     </td>
                 </tr>
@@ -88,7 +88,7 @@
                 </tr>
                 <tr>
                     <td>หมายเลขบัตรคนพิการ :</td>
-                    <td>{{ $tab_member->blind_no }}</td>
+                    <td>{{ $tab_member->no }}</td>
                 </tr>
                  <tr>
                     <td>ระดับการมองเห็น :</td>

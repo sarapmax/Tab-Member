@@ -80,9 +80,11 @@ class ReportController extends Controller
 			    })->export('xls');
 			});
     	}else {
-    		$pdf = PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input]);
+    		$pdf = PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input], [], [
+                'format' => 'A2-L',
+            ]);
 
-            return $pdf->download('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
+            return $pdf->stream('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
     	}
 
     	return view('report.member_report_pdf', compact('tab_members'));
@@ -102,12 +104,12 @@ class ReportController extends Controller
             if(!empty($data) && $data->count()){
                 foreach ($data as $index => $value) {
                     if($index > 1) {
-                        $subDistrict = SubDistrict::whereName($value->sub_district)->first();
-                        $namePrefix = NamePrefix::whereName($value->name_prefix)->first();
+                        $subDistrict = SubDistrict::whereName($value->district)->first();
+                        $namePrefix = NamePrefix::whereName($value->prefix)->first();
                         $province = Province::whereName($value->province)->first();
                         $tab_member_count = TabMember::count();
                         TabMember::create([
-                                    'old_no' => (string) $value->old_no,
+                                    'old_no' => (string) $value->member_no_old,
                                     'no' => $this->tabMemberController->genMemberNumber(
                                         $value->guarantor_type,
                                         !empty($province->id) ? $province->id : null,
@@ -116,23 +118,23 @@ class ReportController extends Controller
                                     ),
                                     'name_prefix_id' => !empty($namePrefix->id) ? $namePrefix->id : null,
                                     'firstname' => $value->firstname,
-                                    'lastname' => $value->lastname,
+                                    'lastname' => $value->surname,
                                     'gender' => $value->gender,
                                     'nationality' => $value->nationality,
                                     'race' => $value->race,
                                     'religion' => $value->religion,
-                                    'idcard' => (string) $value->idcard,
-                                    'home_number' => $value->home_number,
+                                    'idcard' => (string) $value->id_card,
+                                    'home_number' => $value->home_no,
                                     'moo' => (string) $value->moo,
                                     'village' => $value->village,
                                     'soi' => $value->soi,
                                     'road' => $value->road,
                                     'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
                                     'email' => $value->email,
-                                    'mobile_number' => $value->mobile_number,
+                                    'mobile_number' => $value->mobile,
                                     'phone_number' => $value->phone_number,
                                     'phone_serial_number' => $value->phone_serial_number,
-                                    'period_type' => $value->period_type,
+                                    'period_type' => $value->type_member,
                                     'present_address' => $value->present_address,
                                     'blind_no' => $value->blind_no,
                                     'blind_level' => $value->blind_level,

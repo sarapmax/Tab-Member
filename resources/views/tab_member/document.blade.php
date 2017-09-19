@@ -115,7 +115,7 @@
     </tr>
     <tr>
         <th>หมายเลขบัตรคนพิการ :</th>
-        <td>{{ $tab_member->blind_no }}</td>
+        <td>{{ $tab_member->no }}</td>
     </tr>
     <tr>
         <th>ระดับการมองเห็น :</th>
