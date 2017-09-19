@@ -16,7 +16,7 @@
 				  	<div class="card-body">
 				    	<div class="mda-form-group {{ $errors->has('email') ? 'has-error' : '' }}">
 		                   	<div class="mda-form-control">
-		                      	<input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+		                      	<input type="text" name="email" id="email" class="form-control" value="{{ old('email') }}">
 		                      	<div class="mda-form-control-line"></div>
 		                      	<label for="email" class="control-label" style="font-size:1em;"><em class="ion-android-person"> </em> อีเมล</label>
 		                    </div>

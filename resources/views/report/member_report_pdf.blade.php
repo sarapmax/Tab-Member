@@ -58,7 +58,7 @@
 				<th colspan="18"  style="border-right: 0px;">
 					แบบทะเบียนสมาชิกสามัญขององค์การคนพิการแต่ละประเภท ระบุชื่อองค์กร...........
 				</th>
-				<th colspan="3" style="border-left: 0px;">ลายมือชื่อผู้รับรอง................................................................................</th>
+				<th colspan="4" style="border-left: 0px;">ลายมือชื่อผู้รับรอง.................................................................</th>
 			</tr>
 			<tr>
 				<th rowspan="2">ลำดับที่</th>
@@ -72,6 +72,7 @@
 				<th rowspan="2">เบอร์โทรศัพท์</th>
 				<th colspan="4">สถานะผู้สมัคร</th>
 				<th rowspan="2">วันเดือนปีที่สมัคร</th>
+				<th rowspan="2">ประเภทสมาชิก</th>
 			</tr>
 			<tr>
 				<th>บ้านเลขที่</th>
@@ -94,7 +95,7 @@
 				<td>{{ $tab_member->firstname }}</td>
 				<td>{{ $tab_member->lastname }}</td>
 				<td>{{ $tab_member->birthday ? $tab_member->birthday->format('d-m-Y') : '' }}</td>
-				<td>{{ $tab_member->age }}</td>
+				<td style="width:50px;">{{ $tab_member->age }}</td>
 				<td>{{ $tab_member->idcard }}</td>
 				<td>{{ $tab_member->home_number }}</td>
 				<td>{{ $tab_member->moo }}</td>
@@ -105,11 +106,12 @@
 				<td>{{ $tab_member->sub_district ? $tab_member->sub_district->district->name : '' }}</td>
 				<td>{{ $tab_member->sub_district ? $tab_member->sub_district->district->province->name : '' }}</td>
 				<td>{{ $tab_member->mobile_number }}</td>
-				<td>{{ $tab_member->period_type }}</td>
-				<td>{{ $tab_member->blind_level }}</td>
+				<td>{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิตอยู่' }}</td>
+				<td style="width: 500px;">{{ $tab_member->blind_level }}</td>
 				<td>{{ $tab_member->firstname . ' ' . $tab_member->lastname }}</td>
 				<td>{{ $tab_member->no }}</td>
 				<td>{{ $tab_member->created_at->format('d-m-Y') }}</td>
+				<td>{{ $tab_member->period_type }}</td>
 			</tr>
 			@endforeach
 		</table>
