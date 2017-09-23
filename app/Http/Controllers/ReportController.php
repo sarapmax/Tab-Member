@@ -76,6 +76,10 @@ class ReportController extends Controller
     	if($request->report_type == 'xls') {
     		Excel::create('รายงานข้อมูลสมาชิก-'.date('d-m-Y'), function($excel) use($tab_members, $input) {
 			    $excel->sheet('รายงานข้อมูลสมาชิก', function($sheet) use($tab_members, $input) {
+                    $sheet->setColumnFormat([
+                        'G' => '0',
+                        'H' => '0'
+                    ]);
 			        $sheet->loadView('report.member_report_xls', ['tab_members' => $tab_members, 'input' => $input]);
 			    })->export('xls');
 			});
