@@ -53,13 +53,18 @@
 	</style>
 	</head>
 	<body>
+		<h2 style="margin-bottom: 0px;text-align: center;">แบบรายงานข้อมูลทะเบียนสมาชิก สมาคมคนตาบอดแห่งประเทศไทย</h2> <hr/>
+		<ul style="margin-top: 0px;list-style: none;padding:0px;">
+			<li><strong>ภูมิภาค:</strong> {{ $input['geography'] ? $input['geography']['name'] : 'ทั้งหมด' }}</li>
+			<li><strong>จังหวัด:</strong> {{ $input['province'] ? $input['province']['name'] : 'ทั้งหมด' }}</li>
+			<li><strong>ประเภทสมาชิก:</strong> {{ $input['period_type'] ? $input['period_type'] : 'ทั้งหมด' }}</li>
+			<li><strong>ระดับการมองเห็น:</strong> {{ $input['blind_level'] ? $input['blind_level']  : 'ทั้งหมด' }}</li>
+			<li><strong>ระดับการศึกษา:</strong> {{ $input['education_level'] ? $input['education_level']  : 'ทั้งหมด' }}</li>
+			<li><strong>เพศ:</strong> {{ $input['gender'] ? $input['gender']  : 'ทั้งหมด' }}</li>
+			<li><strong>ช่วงอายุ:</strong> {{ $input['start_age'] ? $input['start_age'] . ' - ' .$input['end_age'] . ' ปี' : 'ทั้งหมด' }}</li>
+		</ul>
+
 		<table class="table">
-			<tr>
-				<th colspan="18"  style="border-right: 0px;">
-					แบบทะเบียนสมาชิกสามัญขององค์การคนพิการแต่ละประเภท ระบุชื่อองค์กร...........
-				</th>
-				<th colspan="4" style="border-left: 0px;">ลายมือชื่อผู้รับรอง.................................................................</th>
-			</tr>
 			<tr>
 				<th rowspan="2">ลำดับที่</th>
 				<th rowspan="2">คำนำหน้า</th>

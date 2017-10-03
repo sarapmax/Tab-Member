@@ -3,11 +3,32 @@
 
 	<table class="table">
 		<tr>
-			<th colspan="18"  style="border-right: 0px;">
-				แบบทะเบียนสมาชิกสามัญขององค์การคนพิการแต่ละประเภท ระบุชื่อองค์กร...........
+			<th colspan="22">
+				<h2>แบบรายงานข้อมูลทะเบียนสมาชิก สมาคมคนตาบอดแห่งประเทศไทย</h2>
 			</th>
-			<th colspan="4" style="border-left: 0px;">ลายมือชื่อผู้รับรอง.................................................................</th>
 		</tr>
+		<tr>
+			<td colspan="22"><strong>ภูมิภาค:</strong> {{ $input['geography'] ? $input['geography']['name'] : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>จังหวัด:</strong> {{ $input['province'] ? $input['province']['name'] : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>ประเภทสมาชิก:</strong> {{ $input['period_type'] ? $input['period_type'] : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>ระดับการมองเห็น:</strong> {{ $input['blind_level'] ? $input['blind_level']  : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>ระดับการศึกษา:</strong> {{ $input['education_level'] ? $input['education_level']  : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>เพศ:</strong> {{ $input['gender'] ? $input['gender']  : 'ทั้งหมด' }}</td>
+		</tr>
+		<tr>
+			<td colspan="22"><strong>ช่วงอายุ:</strong> {{ $input['start_age'] ? $input['start_age'] . ' - ' .$input['end_age'] . ' ปี' : 'ทั้งหมด' }}</td>
+		</tr>
+
 		<tr>
 			<th rowspan="2">ลำดับที่</th>
 			<th rowspan="2">คำนำหน้า</th>
