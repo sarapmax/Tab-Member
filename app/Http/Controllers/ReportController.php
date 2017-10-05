@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\District;
 use Illuminate\Http\Request;
 use App\TabMember, App\Geography, App\Province, App\SubDistrict, App\NamePrefix;
 use DB;
@@ -37,41 +38,47 @@ class ReportController extends Controller
     	$input['start_age'] = $request->start_age;
     	$input['end_age'] = $request->end_age;
 
-        $tab_members = TabMember::select('tab_members.*', 'geographies.name AS geography_name', 'provinces.name AS province_name')
-            ->join('sub_districts', 'tab_members.sub_district_id', 'sub_districts.id')
-            ->join('provinces', 'sub_districts.province_id', 'provinces.id')
-            ->join('geographies', 'provinces.geography_id', 'geographies.id')
-            ->where(function($q) use ($request) {
-                if($request->geography_id) {
-                    $q->where('geographies.id', $request->geography_id);
-                }
+    	if($request->geography_id || $request->province_id || $request->period_type || $request->blind_level || $request->education_level
+            || $request->gender || $request->start_age || $request->end_age
+        ) {
+            $tab_members = TabMember::select('tab_members.*', 'geographies.name AS geography_name', 'provinces.name AS province_name')
+                ->join('sub_districts', 'tab_members.sub_district_id', 'sub_districts.id')
+                ->join('provinces', 'sub_districts.province_id', 'provinces.id')
+                ->join('geographies', 'provinces.geography_id', 'geographies.id')
+                ->where(function($q) use ($request) {
+                    if($request->geography_id) {
+                        $q->where('geographies.id', $request->geography_id);
+                    }
 
-                if($request->province_id) {
-                    $q->where('provinces.id', $request->province_id);
-                }
+                    if($request->province_id) {
+                        $q->where('provinces.id', $request->province_id);
+                    }
 
-                if($request->period_type) {
-                    $q->where('tab_members.period_type', $request->period_type);
-                }
+                    if($request->period_type) {
+                        $q->where('tab_members.period_type', $request->period_type);
+                    }
 
-                if($request->blind_level) {
-                    $q->where('tab_members.blind_level', $request->blind_level);
-                }
+                    if($request->blind_level) {
+                        $q->where('tab_members.blind_level', $request->blind_level);
+                    }
 
-                if($request->education_level) {
-                    $q->where('tab_members.education_level', $request->education_level);
-                }
+                    if($request->education_level) {
+                        $q->where('tab_members.education_level', $request->education_level);
+                    }
 
-                if($request->gender) {
-                    $q->where('tab_members.gender', $request->gender);
-                }
+                    if($request->gender) {
+                        $q->where('tab_members.gender', $request->gender);
+                    }
 
-                if($request->start_age && $request->end_age) {
-                    $q->whereBetween('tab_members.age', [$request->start_age, $request->end_age]);
-                    $q->orderBy('tab_members.age', 'asc');
-                }
-            })
-            ->get();
+                    if($request->start_age && $request->end_age) {
+                        $q->whereBetween('tab_members.age', [$request->start_age, $request->end_age]);
+                        $q->orderBy('tab_members.age', 'asc');
+                    }
+                })
+                ->get();
+        }else {
+    	    $tab_members = TabMember::all();
+        }
 
     	if($request->report_type == 'xls') {
     		Excel::create('รายงานข้อมูลสมาชิก-'.date('d-m-Y'), function($excel) use($tab_members, $input) {
@@ -84,14 +91,10 @@ class ReportController extends Controller
 			    })->export('xls');
 			});
     	}else {
-    		$pdf = PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input], [], [
+            return PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input], [], [
                 'format' => 'A2-L',
-            ]);
-
-            return $pdf->stream('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
+            ])->stream('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
     	}
-
-    	return view('report.member_report_pdf', compact('tab_members'));
     }
 
     public function getImport() {
@@ -107,10 +110,32 @@ class ReportController extends Controller
 
             if(!empty($data) && $data->count()){
                 foreach ($data as $index => $value) {
-                    if($index > 1) {
-                        $subDistrict = SubDistrict::whereName($value->district)->first();
+                    if($index > 0) {
                         $namePrefix = NamePrefix::whereName($value->prefix)->first();
-                        $province = Province::whereName($value->province)->first();
+
+                        $subDistrictName = null;
+                        $province = Province::whereName($this->removeSpace($value->province))->first();
+
+                        if($province) {
+                            $district = District::whereName($this->removeSpace($value->amphoe))->whereProvinceId($province->id)->first();
+                        }
+
+                        $subDistrict = SubDistrict::whereName($this->removeSpace($value->district))->get();
+
+                        if($subDistrict->count() > 1) {
+                            if($province && $district) {
+                                $subDistrictName = $subDistrict->where('district_id', $district->id)->where('province_id', $province->id);
+                            }else if($province) {
+                                $subDistrictName = $subDistrict->where('province_id', $province->id);
+                            }else {
+                                $subDistrictName = $subDistrict;
+                            }
+                        }else {
+                            $subDistrictName = $subDistrict;
+                        }
+
+                        $subDistrictName = $subDistrictName->first();
+
                         $tab_member_count = TabMember::count();
                         TabMember::create([
                                     'old_no' => (string) $value->member_no_old,
@@ -133,7 +158,7 @@ class ReportController extends Controller
                                     'village' => $value->village,
                                     'soi' => $value->soi,
                                     'road' => $value->road,
-                                    'sub_district_id' => !empty($subDistrict->id) ? $subDistrict->id : null,
+                                    'sub_district_id' => !empty($subDistrictName->id) ? $subDistrictName->id : null,
                                     'email' => $value->email,
                                     'mobile_number' => $value->mobile,
                                     'phone_number' => $value->phone_number,
@@ -172,5 +197,9 @@ class ReportController extends Controller
         $d = DateTime::createFromFormat('Y-m-d', $date);
         
         return $d && $d->format('Y-m-d') === $date;
+    }
+
+    function removeSpace($string) {
+        return preg_replace('/\s+/', '', $string);
     }
 }

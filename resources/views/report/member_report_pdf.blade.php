@@ -1,7 +1,6 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" type="text/css" href="{{ asset('bower_components/font-awesome/css/font-awesome.css') }}">
 		<title>รายงานข้อมูลสมาชิก</title>
 		<style type="text/css">
 		body{
@@ -16,38 +15,19 @@
 		}
 
 		.table tr th {
-			/*width:60%;*/
 			text-align: center;
 			border: 1px solid black;
 			padding: 6px;
 		}
 
 		.table tr td {
-			/*width:40%;*/
 			text-align: left;
 			border: 1px solid black;
 			padding: 3px;
 		}
 
-		.fa {
-			font-family:"fontawesome";
-			font-size: 12px;
-		}
-
 		.text-center {
 			text-align: center;
-		}
-
-		.text-right {
-			text-align: right;
-		}
-
-		.text-left {
-			text-align: left;
-		}
-
-		.clearfix {
-			clear: both;
 		}
 
 	</style>

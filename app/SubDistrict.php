@@ -13,4 +13,12 @@ class SubDistrict extends Model
     public function zipcode() {
     	return $this->hasOne('App\Zipcode');
     }
+
+    public function  province() {
+	    return $this->belongsTo('App\Province', 'province_id', 'id');
+    }
+
+    public function geography() {
+	    return $this->belongsTo('App\Geography', 'geography_id', 'id');
+    }
 }
