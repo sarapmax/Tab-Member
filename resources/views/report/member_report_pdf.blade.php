@@ -87,9 +87,9 @@
 				<td>{{ $tab_member->village }}</td>
 				<td>{{ $tab_member->soi }}</td>
 				<td>{{ $tab_member->road }}</td>
-				<td>{{ $tab_member->sub_district ? $tab_member->sub_district->name : '' }}</td>
-				<td>{{ $tab_member->sub_district ? $tab_member->sub_district->district->name : '' }}</td>
-				<td>{{ $tab_member->sub_district ? $tab_member->sub_district->district->province->name : '' }}</td>
+				<td>{{ !empty($tab_member->sub_district->name) ? $tab_member->sub_district->name : '' }}</td>
+				<td>{{ !empty($tab_member->sub_district->district->name) ? $tab_member->sub_district->district->name : '' }}</td>
+				<td>{{ !empty($tab_member->sub_district->district->province->name) ? $tab_member->sub_district->district->province->name : '' }}</td>
 				<td>{{ $tab_member->mobile_number }}</td>
 				<td>{{ $tab_member->dead ? 'เสียชีวิต' : 'มีชีวิตอยู่' }}</td>
 				<td style="width: 500px;">{{ $tab_member->blind_level }}</td>
