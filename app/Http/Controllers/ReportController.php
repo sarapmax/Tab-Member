@@ -87,6 +87,19 @@ class ReportController extends Controller
                         'G' => '0',
                         'H' => '0'
                     ]);
+
+                    $sheet->cell('A:V', function($cells) {
+                        $cells->setAlignment('left');
+                    });
+
+                    $sheet->cell('A9:V9', function($cells) {
+                        $cells->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+
+                    $sheet->cell('A10:V10', function($cells) {
+                        $cells->setBorder('thin', 'thin', 'thin', 'thin');
+                    });
+
 			        $sheet->loadView('report.member_report_xls', ['tab_members' => $tab_members, 'input' => $input]);
 			    })->export('xls');
 			});
