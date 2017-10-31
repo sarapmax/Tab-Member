@@ -70,7 +70,7 @@
 				<th>จังหวัด</th>
 				<th>สถานะ</th>
 				<th>ประเภทความพิการ</th>
-				<th>ชื่อ-สกุล คนพิากร</th>
+				<th>ชื่อ-สกุล คนพิการ</th>
 				<th>หมายเลขคนพิการ</th>
 			</tr>
 			@foreach($tab_members as $index => $tab_member)
