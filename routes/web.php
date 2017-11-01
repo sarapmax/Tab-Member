@@ -65,6 +65,8 @@ Route::group(['middleware' => ['user', 'user_activated']], function() {
 
     Route::get('show_user', 'UserController@show');
 
+    Route::get('test_report', 'ReportController@testReport');
+
 	Route::group(['middleware' => 'admin'], function() {
 		Route::get('manage_user', 'UserController@getManageUser');
 

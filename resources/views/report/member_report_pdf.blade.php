@@ -3,8 +3,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>รายงานข้อมูลสมาชิก</title>
 		<style type="text/css">
-		body{
-			font-family: 'thai';
+
+		body {
 			font-size: 19px;
 		}
 
@@ -26,13 +26,14 @@
 			padding: 3px;
 		}
 
-		.text-center {
-			text-align: center;
+		.page-break {
+			page-break-inside: avoid;
 		}
 
 	</style>
 	</head>
 	<body>
+	<div class="page">
 		<h2 style="margin-bottom: 0px;text-align: center;">แบบรายงานข้อมูลทะเบียนสมาชิก สมาคมคนตาบอดแห่งประเทศไทย</h2> <hr/>
 		<ul style="margin-top: 0px;list-style: none;padding:0px;">
 			<li><strong>ภูมิภาค:</strong> {{ $input['geography'] ? $input['geography']['name'] : 'ทั้งหมด' }}</li>
@@ -45,7 +46,7 @@
 		</ul>
 
 		<table class="table">
-			<tr>
+			<tr class="page-break">
 				<th rowspan="2">ลำดับที่</th>
 				<th rowspan="2">คำนำหน้า</th>
 				<th rowspan="2">ชื่อ</th>
@@ -59,7 +60,7 @@
 				<th rowspan="2">วันเดือนปีที่สมัคร</th>
 				<th rowspan="2">ประเภทสมาชิก</th>
 			</tr>
-			<tr>
+			<tr class="page-break">
 				<th>บ้านเลขที่</th>
 				<th>หมู่ที่</th>
 				<th>อาคาร/หมู่บ้าน</th>
@@ -74,7 +75,7 @@
 				<th>หมายเลขคนพิการ</th>
 			</tr>
 			@foreach($tab_members as $index => $tab_member)
-			<tr>
+			<tr class="page-break">
 				<td>{{ $index + 1 }}</td>
 				<td>{{ !empty($tab_member->name_prefix->name) ? $tab_member->name_prefix->name : '' }} </td>
 				<td>{{ $tab_member->firstname }}</td>
@@ -100,5 +101,6 @@
 			</tr>
 			@endforeach
 		</table>
+	</div>
 	</body>
 </html>

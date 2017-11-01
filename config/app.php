@@ -182,7 +182,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
 
     ],
 
@@ -237,8 +237,8 @@ return [
 
         'Image' => Intervention\Image\Facades\Image::class,
 
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

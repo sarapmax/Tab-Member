@@ -104,9 +104,8 @@ class ReportController extends Controller
 			    })->export('xls');
 			});
     	}else {
-            return PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input], [], [
-                'format' => 'A2-L',
-            ])->stream('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
+            $pdf = PDF::loadView('report.member_report_pdf', ['tab_members' => $tab_members, 'input' => $input])->setPaper('a2')->setOrientation('landscape');
+            return $pdf->download('รายงานข้อมูลสมาชิก-'.date('d-m-Y').'.pdf');
     	}
     }
 
@@ -208,7 +207,7 @@ class ReportController extends Controller
 
     function validateDate($date) {
         $d = DateTime::createFromFormat('Y-m-d', $date);
-        
+
         return $d && $d->format('Y-m-d') === $date;
     }
 
