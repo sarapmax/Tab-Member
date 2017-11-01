@@ -25,6 +25,9 @@ class ReportController extends Controller
 
     public function getMemberReport(Request $request) {
 
+        ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 500);
+
     	$this->validate($request, [
     		'report_type' => 'required',
     	]);
