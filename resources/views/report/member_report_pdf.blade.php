@@ -7,12 +7,12 @@
 
 		@font-face {
 			font-family: 'THSarabunNew';
-			src: url('{{ public_path('fonts/THSarabunNew.ttf') }}');
+			src: url('{{ resource_path('fonts/THSarabunNew.ttf') }}');
 		}
 
 		@font-face {
 			font-family: 'THSarabunNew';
-			src: url('{{ public_path('fonts/THSarabunNew Bold.ttf') }}');
+			src: url('{{ resource_path('fonts/THSarabunNew Bold.ttf') }}');
 			font-weight: bold;
 		}
 
