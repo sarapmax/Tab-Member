@@ -2,9 +2,22 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>รายงานข้อมูลสมาชิก</title>
+
 		<style type="text/css">
 
+		@font-face {
+			font-family: 'THSarabunNew';
+			src: url('{{ public_path('fonts/THSarabunNew.ttf') }}');
+		}
+
+		@font-face {
+			font-family: 'THSarabunNew';
+			src: url('{{ public_path('fonts/THSarabunNew Bold.ttf') }}');
+			font-weight: bold;
+		}
+
 		body {
+			font-family: 'THSarabunNew';
 			font-size: 19px;
 		}
 
